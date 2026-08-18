@@ -168,16 +168,17 @@ main{padding:18px 16px 24px;max-width:760px}
 #dashDate{font-size:13px}
 #dashboard .hero .pill{font-size:11px;font-weight:900;padding:6px 10px}
 /* Attendance status colours must always be visible, not only after selection */
-.att>button:nth-of-type(1){background:#e4f8ea!important;border:2px solid #43b86b!important;color:#13733b!important}
-.att>button:nth-of-type(2){background:#fff1d7!important;border:2px solid #e9a63d!important;color:#8a5900!important}
-.att>button:nth-of-type(3){background:#ffe4e4!important;border:2px solid #e14b4b!important;color:#a91414!important}
-.att>button:nth-of-type(4){background:#eee5ff!important;border:2px solid #8757dc!important;color:#5d2fb5!important}
-.att>button:nth-of-type(5){background:#edf4ff!important;border:2px solid #7aa7e8!important;color:#1458a8!important}
-.att>button:nth-of-type(6){background:#f1f4f8!important;border:2px solid #cbd4df!important;color:#4d5d70!important}
-.att>button:nth-of-type(1).onP{background:#bdeccf!important;box-shadow:0 0 0 2px rgba(24,139,69,.12)}
-.att>button:nth-of-type(2).onH{background:#ffe1ad!important;box-shadow:0 0 0 2px rgba(231,165,58,.12)}
-.att>button:nth-of-type(3).onA{background:#ffc7c7!important;box-shadow:0 0 0 2px rgba(224,74,74,.12)}
-.att>button:nth-of-type(4).onO{background:#d9c8ff!important;box-shadow:0 0 0 2px rgba(134,87,220,.12)}
+.att>button:nth-of-type(1),.att>button:nth-of-type(2),.att>button:nth-of-type(3),.att>button:nth-of-type(4),.att>button:nth-of-type(5),.att>button:nth-of-type(6){background:#f4f6f9!important;border:2px solid #d7dee8!important;color:#526174!important;box-shadow:none!important;transform:none!important}
+.att>button:nth-of-type(1).onP{background:#bdeccf!important;border:2px solid #2e9f58!important;color:#09652f!important;box-shadow:0 0 0 3px rgba(24,139,69,.14),0 3px 8px rgba(24,139,69,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(2).onH{background:#ffe1ad!important;border:2px solid #df9a2f!important;color:#7a4d00!important;box-shadow:0 0 0 3px rgba(231,165,58,.15),0 3px 8px rgba(231,165,58,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(3).onA{background:#ffc7c7!important;border:2px solid #d93e3e!important;color:#9b0808!important;box-shadow:0 0 0 3px rgba(224,74,74,.15),0 3px 8px rgba(224,74,74,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(4).onO{background:#d9c8ff!important;border:2px solid #784bd0!important;color:#4d269f!important;box-shadow:0 0 0 3px rgba(134,87,220,.15),0 3px 8px rgba(134,87,220,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(5),.att>button:nth-of-type(6){font-size:12px!important}
+html.dark .att>button:nth-of-type(1),html.dark .att>button:nth-of-type(2),html.dark .att>button:nth-of-type(3),html.dark .att>button:nth-of-type(4),html.dark .att>button:nth-of-type(5),html.dark .att>button:nth-of-type(6){background:#111c2d!important;border:2px solid #30415a!important;color:#c8d2e0!important}
+html.dark .att>button:nth-of-type(1).onP{background:#173a2a!important;border-color:#3c9b65!important;color:#7fe0a2!important}
+html.dark .att>button:nth-of-type(2).onH{background:#3b2e18!important;border-color:#b98b42!important;color:#ffd37b!important}
+html.dark .att>button:nth-of-type(3).onA{background:#3a1d23!important;border-color:#b95a67!important;color:#ff9ba8!important}
+html.dark .att>button:nth-of-type(4).onO{background:#292044!important;border-color:#8069cf!important;color:#c5b6ff!important}
 .att button{min-width:48px!important;min-height:42px!important;font-size:13px!important}
 .att{background:var(--card)!important;border:1px solid var(--line)!important;border-radius:16px!important;padding:10px!important;margin:8px 0!important;box-shadow:0 5px 16px rgba(25,50,90,.07)!important}
 @media(max-width:620px){
@@ -216,6 +217,38 @@ body.dark .card,body.dark .stat,body.dark .panel,body.dark .listCard,body.dark .
 .btn{border-radius:14px;box-shadow:0 4px 10px rgba(15,23,42,.08)}
 body.dark .btn{box-shadow:0 4px 10px rgba(0,0,0,.28)}
 @media(max-width:600px){.hero,.greet,.welcome,.hello-card{border-radius:20px!important}.card{border-radius:16px}}
+</style>
+
+<style>/* Attendance readability fix */
+.attendance-worker-name,.attendance-name,.worker-name,.att-name{color:var(--text,#172033)!important;text-shadow:none!important;opacity:1!important;font-weight:700!important;}
+[data-theme="dark"] .attendance-worker-name,[data-theme="dark"] .attendance-name,[data-theme="dark"] .worker-name,[data-theme="dark"] .att-name,.dark .attendance-worker-name,.dark .attendance-name,.dark .worker-name,.dark .att-name{color:#f3f6fb!important;}
+.attendance-status.present,.att-status.present,.status-btn.present{background:rgba(34,197,94,.72)!important}.attendance-status.half,.att-status.half,.status-btn.half{background:rgba(245,158,11,.72)!important}.attendance-status.absent,.att-status.absent,.status-btn.absent{background:rgba(239,68,68,.72)!important}.attendance-status.ot,.att-status.ot,.status-btn.ot{background:rgba(139,92,246,.72)!important}
+</style>
+<style>
+
+/* FINAL ATTENDANCE READABILITY FIX
+   Target the actual labour-name button used by the attendance renderer.
+*/
+#attList .att > div:first-child button {
+  color:#000000 !important;
+  -webkit-text-fill-color:#000000 !important;
+  font-weight:900 !important;
+  opacity:1 !important;
+  text-shadow:none !important;
+}
+html.dark #attList .att > div:first-child button {
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+
+/* Keep attendance colours clear but not overpowering. */
+</style>
+<style>
+/* Attendance labels: short, clean status text */
+#attList .att > button {
+  font-weight: 800 !important;
+  letter-spacing: .2px;
+}
 </style>
 </head>
 <body>
