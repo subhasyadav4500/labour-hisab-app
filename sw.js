@@ -1,4 +1,4 @@
-const CACHE='labour-hisab-all-cards-ai-balance-fix-v2';
+const CACHE='labour-hisab-all-cards-ai-balance-fix-v3';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./','./index.html'])));
   self.skipWaiting();
