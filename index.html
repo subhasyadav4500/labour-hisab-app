@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b5cff">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Labour Hisab - offline attendance, payment and construction labour cashbook.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<title>Labour Hisab</title>
+<style>
+:root{--blue:#0b5cff;--blue2:#063b9f;--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#6b778c;--line:#e5eaf2;--green:#159447;--red:#c62828;--amber:#b26b00;--purple:#6a45c7;--shadow:0 8px 28px rgba(19,40,80,.08)}
+html.dark{--bg:#0b1220;--card:#121b2b;--text:#edf3ff;--muted:#a8b4c7;--line:#26344a;--shadow:0 8px 28px rgba(0,0,0,.28)}
+html.dark body{background:var(--bg);color:var(--text)}
+html.dark input,html.dark select,html.dark textarea{background:#0d1626;color:var(--text);border-color:#30415a}
+html.dark input::placeholder,html.dark textarea::placeholder{color:#7f8da3}
+html.dark .ghost{background:#121b2b;color:var(--text);border-color:var(--line)}
+html.dark .soft{background:#182c4b;color:#8bb8ff}
+html.dark .item{background:#0f1828;border-color:var(--line)}
+html.dark .mini{background:#172235}
+html.dark .bottomNav{background:#101928;border-color:var(--line)}
+html.dark .bottomNav button{color:#a8b4c7}
+html.dark .bottomNav button.active{background:#1b3154;color:#8bb8ff}
+html.dark .att button{background:#111c2d;color:var(--text);border-color:#30415a}
+html.dark .onP{background:#173a2a!important;border-color:#3c9b65!important;color:#7fe0a2}
+html.dark .onH{background:#3b2e18!important;border-color:#b98b42!important;color:#ffd37b}
+html.dark .onA{background:#3a1d23!important;border-color:#b95a67!important;color:#ff9ba8}
+html.dark .onO{background:#292044!important;border-color:#8069cf!important;color:#c5b6ff}
+html.dark .notice{background:#172b45;color:#b9d5ff}
+html.dark .warn{background:#3b2d17;color:#ffd37b}
+html.dark .success{background:#173727;color:#9ce6b7}
+html.dark .avatarText{background:#193258;color:#8bb8ff;border-color:#294b7b}
+html.dark .pill{background:#1a3155;color:#8bb8ff}
+html.dark .modalBox{background:#121b2b;color:var(--text)}
+html.dark .close{background:#1c293d;color:var(--text)}
+html.dark footer{color:#93a1b6}
+html.dark .footerLinks button{color:#8bb8ff}
+.themeToggle{border:1px solid #ffffff45;background:#ffffff18;color:#fff;border-radius:10px;padding:7px 9px;font-size:18px;line-height:1;min-width:40px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+header{position:sticky;top:0;z-index:20;color:#fff;background:linear-gradient(135deg,#062c78,#0b67e8);box-shadow:0 5px 22px #001c4a35}.head{max-width:1100px;margin:auto;padding:12px 14px 10px}.brand{display:flex;align-items:center;gap:10px}.brand img{width:46px;height:46px;border-radius:12px;background:#fff}.logoEmoji{width:46px;height:46px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:27px;overflow:hidden}.logoEmoji img{width:100%;height:100%;object-fit:cover}.heroEmoji{overflow:hidden}.heroEmoji img{width:100%;height:100%;object-fit:cover}.heroEmoji{width:60px;height:60px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:34px}.brand h1{font-size:20px;margin:0}.brand small{opacity:.9}.headrow{display:flex;align-items:center;justify-content:space-between;gap:10px}.langWrap{display:flex;align-items:center;gap:6px}.langHint{font-size:10px;font-weight:900;opacity:.8}.lang{border:1px solid #ffffff45;background:#ffffff18;color:#fff;border-radius:10px;padding:8px 10px;font-weight:800}.nav{display:flex;gap:7px;overflow:auto;padding-top:10px}.nav button{border:0;background:#ffffff20;color:#fff;border-radius:10px;padding:9px 12px;white-space:nowrap;font-weight:800}.nav button.active{background:#fff;color:#0756c9}.navIcon{font-size:18px;vertical-align:-2px}
+main{max-width:1200px;margin:auto;padding:18px 16px} .head{max-width:1200px;margin:auto;padding:12px 16px 10px}.nav{scrollbar-width:thin}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}.stat{min-height:92px}.stat span{color:var(--muted);font-size:12px;font-weight:800}.stat b{display:block;font-size:22px;margin-top:7px}.green{color:var(--green)}.red{color:var(--red)}.amber{color:var(--amber)}.purple{color:var(--purple)}.muted{color:var(--muted);font-size:12px}.sectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px}.sectionHead h2,.sectionHead h3{margin:0 0 4px}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:800}.primary{background:var(--blue);color:#fff}.soft{background:#edf4ff;color:#0758c9}.danger{background:#ffebeb;color:#b51f1f}.good{background:#e7f7ed;color:#11763a}.wa{background:#20b95a;color:#fff}.ghost{background:#fff;border:1px solid var(--line);color:var(--text)}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions>*{flex:1;min-width:120px}.call{background:#e9f7ee;color:#11763a}.wa{min-width:110px}.tiny{padding:8px 10px;min-width:auto}.bilingualOption{font-weight:800}
+@media print{header,.bottomNav,footer,.actions,.langWrap{display:none!important}body{background:#fff}main{max-width:none;padding:0}.card{box-shadow:none;break-inside:avoid}}
+label{display:block;font-size:12px;font-weight:800;color:#4f5d72;margin:8px 0 4px}input,select,textarea{width:100%;border:1px solid #d7deea;background:#fff;border-radius:10px;padding:11px 12px;color:var(--text);outline:none}input:focus,select:focus,textarea:focus{border-color:#6fa0ff;box-shadow:0 0 0 3px #0b5cff12}textarea{min-height:90px;resize:vertical}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.full{grid-column:1/-1}
+.list{display:grid;gap:8px}.item{border:1px solid var(--line);border-radius:13px;padding:11px;background:#fbfcfe}.itemTop{display:flex;justify-content:space-between;gap:8px;align-items:start}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef4ff;color:#155ac6;font-size:11px;font-weight:900}.avatar{width:54px;height:54px;border-radius:14px;object-fit:cover;background:#eaf1ff;border:2px solid #dce8ff}.avatarText{width:54px;height:54px;border-radius:14px;background:#eaf1ff;color:#0b5cff;display:grid;place-items:center;font-weight:900;font-size:19px}.person{display:grid;grid-template-columns:54px 1fr auto;gap:10px;align-items:start}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:9px}.mini{background:#f6f8fc;border-radius:10px;padding:8px}.mini span{display:block;color:var(--muted);font-size:10px;font-weight:800}.mini b{font-size:15px}.line{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:9px 0}.empty{text-align:center;color:var(--muted);padding:26px}
+.att{display:grid;grid-template-columns:1fr 150px 52px 52px 52px 70px 44px;gap:5px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}.att select{border:1px solid #d8dfeb;background:#fff;border-radius:8px;padding:8px 5px;font-size:12px;font-weight:800}.att button{border:1px solid #d8dfeb;background:#fff;border-radius:8px;padding:8px 3px;font-size:12px;font-weight:900}.onP{background:#dff5e8!important;border-color:#58b276!important;color:#137a3d}.onH{background:#fff0d0!important;border-color:#dfb15c!important;color:#8a5a00}.onA{background:#ffe5e5!important;border-color:#d66!important;color:#a00}.onO{background:#e9e4ff!important;border-color:#9277e5!important;color:#5a3ca7}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;border-bottom:1px solid var(--line);padding:9px 6px;font-size:13px}.table th{font-size:11px;color:var(--muted)}
+.notice{padding:11px 12px;border-radius:12px;background:#eef6ff;color:#194d98;font-size:12px;line-height:1.5}.warn{background:#fff5df;color:#805300}.success{background:#e8f8ee;color:#176d3b}.profile{display:flex;gap:12px;align-items:center}.profile img{width:60px;height:60px;border-radius:16px}.hero{background:linear-gradient(135deg,#061f52,#0b5cff);color:#fff;border:0}.hero .muted{color:#dce9ff}.projectCard{border-left:5px solid var(--blue)}.modal{position:fixed;inset:0;background:#07152b99;z-index:100;display:grid;place-items:center;padding:14px}.modalBox{background:#fff;border-radius:18px;width:min(680px,100%);max-height:92vh;overflow:auto;padding:16px;box-shadow:0 18px 50px #001b4b55}.close{float:right;border:0;background:#eef3fb;border-radius:9px;padding:7px 10px;font-weight:900}
+footer{max-width:1100px;margin:auto;padding:15px 14px 30px;color:var(--muted);font-size:12px}.footerLinks{display:flex;gap:12px;flex-wrap:wrap}.footerLinks button{background:none;border:0;color:#175dc4;padding:0}
+.bottomNav{display:none}
+@media(max-width:980px){.grid{grid-template-columns:repeat(3,1fr)}.person{grid-template-columns:54px 1fr}.person>.actions{grid-column:1/-1}.nav{overflow-x:auto}}
+@media(max-width:620px){
+  body{padding-bottom:72px}
+  header{position:sticky;top:0}
+  .nav{display:none}
+  .bottomNav{position:fixed;display:flex;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 25px #102b5514;padding:7px 5px calc(7px + env(safe-area-inset-bottom));justify-content:space-around}
+  .bottomNav button{border:0;background:none;color:#68758a;font-size:10px;font-weight:900;padding:5px 7px;border-radius:12px;min-width:54px}
+  .bottomNav button span{display:block;font-size:20px;line-height:22px;margin-bottom:2px}
+  .bottomNav button.active{background:#edf4ff;color:#0758c9}
+}@media(max-width:620px){.grid{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.att{display:flex;flex-wrap:wrap;gap:7px;padding:10px 0}.att> :nth-child(1){flex:1 1 100%;min-width:0}.att> :nth-child(2){flex:1 1 100%;min-width:0;width:100%}.att> :nth-child(3),.att> :nth-child(4),.att> :nth-child(5),.att> :nth-child(6),.att> :nth-child(7){flex:1 1 0;min-width:0}.att select{width:100%;min-width:0!important;padding:10px 8px;font-size:12px}.att button{padding:9px 2px;font-size:12px;min-height:40px}.brand h1{font-size:18px}.nav button{padding:8px 10px}}@media(max-width:400px){.grid{gap:6px}.card{padding:11px}.stat b{font-size:19px}.att{gap:6px}.att button{font-size:11px;min-height:38px;padding:8px 1px}}
+
+.statLabel{display:flex;align-items:center;gap:8px;font-weight:800}.statEmoji{font-size:29px;line-height:1;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px}.stat .btn.tiny{min-height:36px;padding:6px 9px;font-size:13px;gap:5px}.stat b{display:block;margin-top:7px;font-size:22px}
+
+
+/* ===== Modern Premium UI enhancement ===== */
+:root{
+  --radius-lg:20px;--radius-md:15px;--radius-sm:11px;
+  --shadow-card:0 10px 30px rgba(16,38,82,.08),0 2px 8px rgba(16,38,82,.04);
+  --shadow-float:0 14px 34px rgba(16,38,82,.14);
+  --focus:0 0 0 4px rgba(11,92,255,.14);
+}
+html.dark{--shadow-card:0 12px 34px rgba(0,0,0,.28);--shadow-float:0 16px 38px rgba(0,0,0,.34);--focus:0 0 0 4px rgba(80,145,255,.18)}
+body{background:radial-gradient(circle at 10% -10%,rgba(11,92,255,.08),transparent 34%),var(--bg);transition:background .25s ease,color .25s ease}
+header{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,25,75,.16)}
+.card{border-radius:var(--radius-lg);box-shadow:var(--shadow-card);padding:16px;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.card:hover{box-shadow:var(--shadow-float)}
+.btn{border-radius:var(--radius-sm);min-height:44px;padding:10px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.02);box-shadow:0 7px 18px rgba(11,92,255,.12)}
+.btn:active{transform:translateY(0) scale(.98)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;box-shadow:var(--focus)}
+input,select,textarea{border-radius:var(--radius-sm);min-height:44px;transition:border-color .15s ease,box-shadow .15s ease,background .15s ease}
+input:hover,select:hover,textarea:hover{border-color:#b7c6df}
+.stat{border-radius:var(--radius-lg);overflow:hidden;position:relative}
+.stat::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(#0b5cff,#55a0ff);border-radius:4px}
+.mini{border:1px solid transparent;transition:transform .15s ease,border-color .15s ease,background .15s ease}.mini:hover{transform:translateY(-2px);border-color:#cddcff}
+.item,.projectCard{border-radius:var(--radius-md);box-shadow:0 4px 14px rgba(16,38,82,.05)}
+.pill{padding:5px 9px}
+.avatar,.avatarText{box-shadow:0 3px 10px rgba(16,38,82,.1)}
+.notice{border:1px solid rgba(11,92,255,.08);border-radius:var(--radius-md)}
+.modalBox{border-radius:24px;box-shadow:var(--shadow-float)}
+.close{min-width:40px;min-height:40px;border-radius:12px}
+.themeToggle{min-width:44px;min-height:42px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 5px 16px rgba(0,0,0,.08)}
+.nav button{border-radius:13px;transition:transform .15s ease,background .15s ease}.nav button:hover{transform:translateY(-1px)}
+.bottomNav{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.bottomNav button{transition:transform .15s ease,background .15s ease}.bottomNav button:active{transform:scale(.95)}
+.lh-btn-icon{width:18px;height:18px;flex:0 0 18px;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
+.lh-btn-icon svg{width:18px;height:18px;display:block;stroke:currentColor}
+button.lh-icon-only .lh-btn-icon{margin:0}
+@media(max-width:620px){
+  main{padding:12px 10px}
+  .card{padding:13px;border-radius:17px}
+  .sectionHead{align-items:flex-start;flex-wrap:wrap}
+  .actions{gap:7px}.actions>*{min-width:calc(50% - 4px)}
+  .btn{min-height:46px;padding:10px 11px}.stat .btn.tiny{min-height:36px;padding:6px 8px;font-size:12px}
+  .brand small{font-size:11px}.brand h1{font-size:18px}
+  .langWrap{gap:4px}.langHint{display:none}.lang{min-height:42px}
+  .bottomNav{padding-top:8px}
+  .bottomNav button{min-width:50px;padding:6px 5px}
+}
+@media(max-width:380px){.actions>*{min-width:100%}.headrow{gap:6px}.brand{gap:7px}.logoEmoji,.brand img{width:42px;height:42px}.themeToggle{min-width:40px}}
+
+.editBtn{background:#eef5ff;color:#0758c9;border:1px solid #cfe0ff}
+html.dark .editBtn{background:#182c4b;color:#8bb8ff;border-color:#30415a}
+
+/* ===== Android-style finishing pass: visual-only, preserves app logic ===== */
+:root{
+  --android-blue:#0b5cff;--android-blue-dark:#073a9f;
+  --android-surface:#ffffff;--android-bg:#f1f5fb;
+  --android-green:#159447;--android-orange:#f59a16;--android-red:#e53935;--android-purple:#7a43d8;
+}
+body{background:var(--android-bg)}
+header{background:linear-gradient(145deg,#073b9f 0%,#0b67e8 100%);border-bottom:0;box-shadow:0 5px 18px rgba(0,43,120,.22)}
+.head{padding:10px 14px 9px}
+.brand{gap:9px}.brand img,.logoEmoji{width:46px;height:46px;border-radius:12px}.brand h1{font-size:20px;letter-spacing:-.2px}.brand small{font-size:12px;line-height:1.2}
+.themeToggle{height:42px;min-width:42px;border-radius:12px;padding:7px 9px}.lang{height:42px;border-radius:12px;padding:8px 11px}
+main{padding:18px 16px 24px;max-width:760px}
+.card{border-radius:20px;border:1px solid #e8edf5;background:#fff;box-shadow:0 8px 24px rgba(26,52,92,.09);padding:16px}
+.grid{gap:10px}.stat{min-height:136px;display:flex;flex-direction:column;justify-content:space-between}.statLabel{font-size:14px}.statEmoji{font-size:24px;width:29px;height:29px}.stat b{font-size:22px;margin-top:4px}.stat .btn.tiny{min-height:38px;font-size:12.5px;padding:6px 9px;border-radius:12px}.plusIcon{font-size:18px;line-height:1;font-weight:500}
+.stat .btn{box-shadow:none}.stat .primary{background:#0b5cff}.stat .good{background:#e7f7ed;color:#13763c}.stat .danger{background:#ffebeb;color:#b91f2a}.stat .soft{background:#edf3ff;color:#0956c7}
+.hero{border-radius:22px;box-shadow:0 10px 28px rgba(7,69,170,.18)}
+.heroEmoji{width:56px;height:56px;border-radius:15px;font-size:30px}.hero h2{font-size:22px}
+.sectionHead h2{font-size:20px}.sectionHead h3{font-size:17px}
+.btn{min-height:42px;border-radius:12px}.actions{gap:7px}.actions>*{min-width:100px}
+/* Small edit/delete icons, like native Android list controls */
+.iconBtn{width:34px;height:34px;min-width:34px!important;padding:0!important;border:1px solid #d9e2ef;background:#f4f7fb;color:#31557e;border-radius:10px;display:inline-grid;place-items:center;font-size:15px;box-shadow:none}
+.iconBtn:hover{transform:none;box-shadow:none}.editIcon{background:#edf4ff;border-color:#cfe0ff;color:#0b5cff}.editIcon:active{transform:scale(.94)}
+/* Android-like list cards */
+.itemTop{align-items:center}.itemTop>div:last-child{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:flex-end}.itemTop>div:last-child>b{margin-right:3px}
+.projectCard{border-left:4px solid #0b5cff}.projectCard .actions{align-items:center}.projectCard .actions .iconBtn{margin-left:auto}
+.compactActions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:6px!important;flex-wrap:nowrap!important}.compactActions .iconBtn{margin:0!important;width:34px;height:34px;min-width:34px!important;border-radius:10px}.compactActions .wa{background:#e9f8ef;color:#168449;border:1px solid #bde6cc}.compactActions .call{background:#edf4ff;color:#1763c5;border:1px solid #c9dcfa}.compactActions .deleteAction{background:#fff0f0;color:#c62828;border:1px solid #f1caca}.compactActions .editIcon{background:#fff7e5;color:#a66a00;border-color:#f0d59a}.compactActions .lh-btn-icon{margin-right:0!important}.compactActions .lh-btn-icon svg{width:16px!important;height:16px!important}.compactActions .actionText{display:none}
+@media(max-width:620px){.compactActions .iconBtn{width:32px;height:32px;min-width:32px!important}.compactActions{gap:5px!important}}
+/* Attendance: keep the colorful P/HF/A/OT controls highly visible */
+.att{background:#fff;border:1px solid #e7edf6;border-radius:15px;padding:9px;margin:7px 0;box-shadow:0 4px 14px rgba(25,50,90,.06);border-bottom:1px solid #e7edf6}
+.att button{border-radius:10px;font-weight:900;min-height:40px}.att .onP{background:#dff6e7!important;border:2px solid #36a75c!important;color:#12733b}.att .onH{background:#fff0d5!important;border:2px solid #e7a53a!important;color:#8c5b00}.att .onA{background:#ffe2e2!important;border:2px solid #e04a4a!important;color:#ad1616}.att .onO{background:#eee5ff!important;border:2px solid #8657dc!important;color:#5d2fb5}
+/* Payment and worker lists feel like native Android cards */
+#paymentList .card,#workerList .card,#projectList .card,#cashList .card,#futureList .card{border-radius:16px;padding:13px 14px}
+#paymentList .itemTop>div:last-child{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+#paymentList .paymentActions{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+#paymentList .paymentActions .compactActions{gap:5px!important}
+/* Bottom navigation */
+.bottomNav{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:7px 5px calc(7px + env(safe-area-inset-bottom));border-top:1px solid #e2e8f2;box-shadow:0 -8px 24px rgba(22,45,85,.10)}
+.bottomNav button{border-radius:14px;min-width:56px;font-size:10px}.bottomNav button span{font-size:21px}.bottomNav button.active{background:#edf4ff;color:#0758c9}
+@media(max-width:620px){
+  main{padding:14px 12px 20px}
+  .grid{gap:9px}.card{padding:14px}.stat{min-height:128px}.stat b{font-size:21px}
+  .brand h1{font-size:19px}.brand small{font-size:11px}.headrow{gap:7px}.langWrap{gap:5px}.langHint{display:none}
+  .att{padding:9px 8px}.att> :nth-child(3),.att> :nth-child(4),.att> :nth-child(5),.att> :nth-child(6),.att> :nth-child(7),.att> :nth-child(8){flex:1 1 0;min-width:0}
+  .att button{min-height:39px;font-size:12px}
+  .iconBtn{width:32px;height:32px;min-width:32px!important;font-size:14px}
+  .projectCard .actions .iconBtn{margin-left:0}
+  #paymentList .itemTop>div:last-child{gap:4px}.itemTop>div:last-child>b{font-size:16px}
+}
+@media(max-width:390px){.stat{min-height:122px}.statLabel{font-size:13px}.statEmoji{font-size:22px}.stat .btn.tiny{font-size:12px;padding:5px 7px}.bottomNav button{min-width:51px}}
+
+/* Final Android polish: keep greeting hero visible and make every attendance status clearly visible */
+.hero{min-height:112px;border-radius:22px;padding:18px 18px;box-shadow:0 12px 30px rgba(8,65,170,.20)}
+#dashboard .hero{display:block!important;visibility:visible!important;opacity:1!important;margin-bottom:12px}
+#dashHello{font-size:27px;line-height:1.15;margin:0 0 5px;font-weight:900;letter-spacing:-.3px}
+#dashDate{font-size:13px}
+#dashboard .hero .pill{font-size:11px;font-weight:900;padding:6px 10px}
+/* Attendance status colours must always be visible, not only after selection */
+.att>button:nth-of-type(1),.att>button:nth-of-type(2),.att>button:nth-of-type(3),.att>button:nth-of-type(4),.att>button:nth-of-type(5),.att>button:nth-of-type(6){background:#f4f6f9!important;border:2px solid #d7dee8!important;color:#526174!important;box-shadow:none!important;transform:none!important}
+.att>button:nth-of-type(1).onP{background:#bdeccf!important;border:2px solid #2e9f58!important;color:#09652f!important;box-shadow:0 0 0 3px rgba(24,139,69,.14),0 3px 8px rgba(24,139,69,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(2).onH{background:#ffe1ad!important;border:2px solid #df9a2f!important;color:#7a4d00!important;box-shadow:0 0 0 3px rgba(231,165,58,.15),0 3px 8px rgba(231,165,58,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(3).onA{background:#ffc7c7!important;border:2px solid #d93e3e!important;color:#9b0808!important;box-shadow:0 0 0 3px rgba(224,74,74,.15),0 3px 8px rgba(224,74,74,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(4).onO{background:#d9c8ff!important;border:2px solid #784bd0!important;color:#4d269f!important;box-shadow:0 0 0 3px rgba(134,87,220,.15),0 3px 8px rgba(134,87,220,.16)!important;transform:translateY(-1px)!important}
+.att>button:nth-of-type(5),.att>button:nth-of-type(6){font-size:12px!important}
+html.dark .att>button:nth-of-type(1),html.dark .att>button:nth-of-type(2),html.dark .att>button:nth-of-type(3),html.dark .att>button:nth-of-type(4),html.dark .att>button:nth-of-type(5),html.dark .att>button:nth-of-type(6){background:#111c2d!important;border:2px solid #30415a!important;color:#c8d2e0!important}
+html.dark .att>button:nth-of-type(1).onP{background:#173a2a!important;border-color:#3c9b65!important;color:#7fe0a2!important}
+html.dark .att>button:nth-of-type(2).onH{background:#3b2e18!important;border-color:#b98b42!important;color:#ffd37b!important}
+html.dark .att>button:nth-of-type(3).onA{background:#3a1d23!important;border-color:#b95a67!important;color:#ff9ba8!important}
+html.dark .att>button:nth-of-type(4).onO{background:#292044!important;border-color:#8069cf!important;color:#c5b6ff!important}
+.att button{min-width:48px!important;min-height:42px!important;font-size:13px!important}
+.att{background:var(--card)!important;border:1px solid var(--line)!important;border-radius:16px!important;padding:10px!important;margin:8px 0!important;box-shadow:0 5px 16px rgba(25,50,90,.07)!important}
+@media(max-width:620px){
+  .hero{padding:17px 16px;min-height:108px}
+  #dashHello{font-size:25px}
+  .att{grid-template-columns:minmax(150px,1.45fr) minmax(118px,1fr) 48px 48px 48px 54px 40px 40px!important;overflow-x:auto}
+  .att>div:first-child{min-width:150px}
+  .att select{min-width:118px!important}
+  .att button{min-width:48px!important}
+}
+
+
+/* Premium 3D emoji treatment — visual only */
+.emoji, .icon-emoji, .dashboard-emoji, .stat-emoji, .nav-emoji, .action-emoji, .title-emoji, .worker-emoji {
+  display:inline-block;
+  transform: translateZ(0);
+  filter: drop-shadow(0 2px 1px rgba(0,0,0,.18)) drop-shadow(0 5px 4px rgba(0,0,0,.10));
+  text-shadow: 0 1px 0 rgba(255,255,255,.35), 0 2px 2px rgba(0,0,0,.22);
+  transition: transform .18s ease, filter .18s ease;
+}
+.emoji:hover, .icon-emoji:hover, .dashboard-emoji:hover, .stat-emoji:hover, .nav-emoji:hover, .action-emoji:hover, .title-emoji:hover, .worker-emoji:hover {
+  transform: translateY(-1px) scale(1.06);
+}
+.dark .emoji, .dark .icon-emoji, .dark .dashboard-emoji, .dark .stat-emoji, .dark .nav-emoji, .dark .action-emoji, .dark .title-emoji, .dark .worker-emoji {
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.55)) drop-shadow(0 5px 5px rgba(0,0,0,.30));
+  text-shadow: 0 1px 0 rgba(255,255,255,.18), 0 2px 3px rgba(0,0,0,.55);
+}
+</style>
+
+<style id="final-3d-polish">
+:root{--hero-grad:linear-gradient(135deg,#0b5cff,#3b82f6 55%,#60a5fa)}
+.hero,.greet,.welcome,.hello-card{background:var(--hero-grad)!important;color:#fff!important;border-radius:22px!important;box-shadow:0 10px 28px rgba(11,92,255,.24),inset 0 1px 0 rgba(255,255,255,.18)!important}
+.hero *,.greet *,.welcome *,.hello-card *{color:#fff!important}
+.card,.stat,.panel,.listCard,.workerCard,.paymentCard,.projectCard{border-radius:18px;box-shadow:0 8px 22px rgba(15,23,42,.10);}
+body.dark .card,body.dark .stat,body.dark .panel,body.dark .listCard,body.dark .workerCard,body.dark .paymentCard,body.dark .projectCard{box-shadow:0 8px 24px rgba(0,0,0,.35);}
+.btn{border-radius:14px;box-shadow:0 4px 10px rgba(15,23,42,.08)}
+body.dark .btn{box-shadow:0 4px 10px rgba(0,0,0,.28)}
+@media(max-width:600px){.hero,.greet,.welcome,.hello-card{border-radius:20px!important}.card{border-radius:16px}}
+</style>
+
+<style>/* Attendance readability fix */
+.attendance-worker-name,.attendance-name,.worker-name,.att-name{color:var(--text,#172033)!important;text-shadow:none!important;opacity:1!important;font-weight:700!important;}
+[data-theme="dark"] .attendance-worker-name,[data-theme="dark"] .attendance-name,[data-theme="dark"] .worker-name,[data-theme="dark"] .att-name,.dark .attendance-worker-name,.dark .attendance-name,.dark .worker-name,.dark .att-name{color:#f3f6fb!important;}
+.attendance-status.present,.att-status.present,.status-btn.present{background:rgba(34,197,94,.72)!important}.attendance-status.half,.att-status.half,.status-btn.half{background:rgba(245,158,11,.72)!important}.attendance-status.absent,.att-status.absent,.status-btn.absent{background:rgba(239,68,68,.72)!important}.attendance-status.ot,.att-status.ot,.status-btn.ot{background:rgba(139,92,246,.72)!important}
+</style>
+<style>
+
+/* FINAL ATTENDANCE READABILITY FIX
+   Target the actual labour-name button used by the attendance renderer.
+*/
+#attList .att > div:first-child button {
+  color:#000000 !important;
+  -webkit-text-fill-color:#000000 !important;
+  font-weight:900 !important;
+  opacity:1 !important;
+  text-shadow:none !important;
+}
+html.dark #attList .att > div:first-child button {
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+
+/* Keep attendance colours clear but not overpowering. */
+</style>
+<style>
+/* Attendance labels: short, clean status text */
+#attList .att > button {
+  font-weight: 800 !important;
+  letter-spacing: .2px;
+}
+</style>
+<style id="attendance-button-final-fix">
+/* Attendance buttons only: neutral until selected; selected status is solid + unmistakable. */
+#attList .att > button {
+  background:#f3f5f7 !important;
+  border:1px solid #d6dce5 !important;
+  color:#5b6573 !important;
+  box-shadow:none !important;
+  transform:none !important;
+  transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease,box-shadow .15s ease;
+}
+#attList .att > button.onP {
+  background:#16a34a !important;
+  border-color:#16a34a !important;
+  color:#fff !important;
+  box-shadow:0 3px 9px rgba(22,163,74,.28) !important;
+  transform:translateY(-1px) !important;
+}
+#attList .att > button.onH {
+  background:#f59e0b !important;
+  border-color:#f59e0b !important;
+  color:#fff !important;
+  box-shadow:0 3px 9px rgba(245,158,11,.28) !important;
+  transform:translateY(-1px) !important;
+}
+#attList .att > button.onA {
+  background:#dc2626 !important;
+  border-color:#dc2626 !important;
+  color:#fff !important;
+  box-shadow:0 3px 9px rgba(220,38,38,.28) !important;
+  transform:translateY(-1px) !important;
+}
+#attList .att > button.onO {
+  background:#7c3aed !important;
+  border-color:#7c3aed !important;
+  color:#fff !important;
+  box-shadow:0 3px 9px rgba(124,58,237,.28) !important;
+  transform:translateY(-1px) !important;
+}
+html.dark #attList .att > button {
+  background:#111c2d !important;
+  border-color:#30415a !important;
+  color:#c8d2e0 !important;
+}
+html.dark #attList .att > button.onP { background:#16a34a !important; border-color:#16a34a !important; color:#fff !important; }
+html.dark #attList .att > button.onH { background:#f59e0b !important; border-color:#f59e0b !important; color:#fff !important; }
+html.dark #attList .att > button.onA { background:#dc2626 !important; border-color:#dc2626 !important; color:#fff !important; }
+html.dark #attList .att > button.onO { background:#7c3aed !important; border-color:#7c3aed !important; color:#fff !important; }
+</style>
+</head>
+<body>
+<header><div class="head">
+<div class="headrow"><div class="brand"><span class="logoEmoji" aria-hidden="true"><img src="icon-192.png" alt="" onerror="this.remove()">👷</span><div><h1>Labour Hisab</h1><small id="tagline">Work • Attendance • Payment • Reports</small></div></div><div class="langWrap"><span class="langHint">EN / हिन्दी</span><button class="themeToggle" id="themeToggle" type="button" onclick="toggleDarkMode()" aria-label="Dark mode">🌙</button><button class="themeToggle" id="aiTopBtn" type="button" onclick="go('ai')" aria-label="AI Hisab">🤖</button><select class="lang" id="langSelect" onchange="setLang(this.value)" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option><option value="gu">ગુજરાતી</option><option value="pa">ਪੰਜਾਬੀ</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option></select></div>
+<div class="nav" id="nav"></div></div></header>
+<nav class="bottomNav" id="bottomNav"></nav>
+<main>
+<section id="onboarding" class="hidden">
+<div class="card hero"><div class="profile"><span class="heroEmoji"><img src="icon-192.png" alt="" onerror="this.remove()">👷</span><div><h2 data-i18n="welcome">Welcome to Labour Hisab</h2><div class="muted" data-i18n="profileOnce">Set your profile once. Your data stays on this device and works offline.</div></div></div></div>
+<div class="card"><h3 data-i18n="createProfile">Create your profile</h3><div class="formgrid">
+<div><label data-i18n="name">Name</label><input id="pName"></div><div><label data-i18n="surname">Surname</label><input id="pSurname"></div><div class="full"><label data-i18n="company">Company / Business</label><input id="pCompany"></div><div><label data-i18n="mobile">Mobile number</label><input id="pPhone" inputmode="numeric"></div>
+<div><label data-i18n="workerRate">Worker rate / day</label><input id="rWorker" type="number" value="500"></div><div><label data-i18n="headRate">Head worker / Mistri / day</label><input id="rHead" type="number" value="1000"></div><div><label data-i18n="managerRate">Manager / day</label><input id="rManager" type="number" value="2000"></div><div><label data-i18n="skilledRate">Skilled / head skilled / day</label><input id="rSkill" type="number" value="500"></div>
+</div><div class="notice" style="margin-top:10px" data-i18n="rateNote">These are default rates. You can change a worker's rate when adding or editing them. Attendance automatically calculates earned pay.</div><button class="btn primary" style="margin-top:12px;width:100%" onclick="saveProfile()" data-i18n="continue">Create & Continue</button></div>
+</section>
+
+<section id="dashboard">
+<div class="card hero"><div class="sectionHead"><div><h2 id="dashHello">Hello 👋</h2><div class="muted" id="dashDate"></div></div><span class="pill" style="background:#ffffff22;color:#fff" data-i18n="offline">OFFLINE READY</span></div></div>
+<div class="grid"><div class="card stat" style="cursor:pointer" onclick="go('projects')" title="Open Projects"><span class="statLabel"><span class="statEmoji">🏗️</span><span data-i18n="totalProjects">Total Projects</span></span><b id="sProjects">0</b><button class="btn primary tiny" style="margin-top:8px;width:100%" onclick="event.stopPropagation();go('projects');setTimeout(()=>document.getElementById('projectForm').classList.remove('hidden'),50)">Add Project</button></div><div class="card stat" style="cursor:pointer" onclick="go('projects')"><span class="statLabel"><span class="statEmoji">✅</span><span data-i18n="completed">Completed</span></span><b id="sCompleted">0</b><button class="btn soft tiny" style="margin-top:8px;width:100%" onclick="event.stopPropagation();go('projects')">📋 View</button></div><div class="card stat" style="cursor:pointer" onclick="go('cashbook')"><span class="statLabel"><span class="statEmoji">💰</span><span data-i18n="income">Overall Income</span></span><b class="green" id="sIncome">₹0</b><button class="btn good tiny" style="margin-top:8px;width:100%" onclick="event.stopPropagation();go('cashbook')">Add Income</button></div><div class="card stat" style="cursor:pointer" onclick="go('cashbook')"><span class="statLabel"><span class="statEmoji">💸</span><span data-i18n="expenses">Overall Expenses</span></span><b class="red" id="sExpense">₹0</b><button class="btn danger tiny" style="margin-top:8px;width:100%" onclick="event.stopPropagation();go('cashbook')">Add Expense</button></div><div class="card stat" style="cursor:pointer" onclick="go('payment')"><span class="statLabel"><span class="statEmoji">📌</span><span data-i18n="payable">Payables</span></span><b class="amber" id="sPayable">₹0</b><button class="btn soft tiny" style="margin-top:8px;width:100%" onclick="event.stopPropagation();go('payment')">💵 Payment</button></div></div>
+<div class="card"><div class="sectionHead"><div><h3 data-i18n="today">Today</h3><div class="muted" data-i18n="quickView">Quick view of work and money</div></div><button class="btn soft" onclick="go('attendance')" data-i18n="markAttendance">Mark Attendance</button></div><div class="kpis"><div class="mini" style="cursor:pointer" onclick="go('workers')"><span data-i18n="workers">Labour</span><b id="sWorkers">0</b></div><div class="mini" style="cursor:pointer" onclick="go('attendance')"><span data-i18n="presentHalf">Present / Half</span><b id="sPresent">0 / 0</b></div><div class="mini" style="cursor:pointer" onclick="go('reports')"><span data-i18n="earnedToday">Earned today</span><b id="sEarnedToday">₹0</b></div><div class="mini" style="cursor:pointer" onclick="go('payment')"><span data-i18n="paidToday">Paid today</span><b id="sPaidToday">₹0</b></div></div></div>
+<div class="card"><div class="sectionHead"><div><h3 data-i18n="quickActions">Quick Actions</h3><div class="muted" data-i18n="quickActionsSub">Common tasks in one tap</div></div></div>
+<div class="actions" style="margin-top:9px">
+<button class="btn primary" onclick="go('workers')">👷 <span data-i18n="workers">Labour</span></button>
+<button class="btn soft" onclick="go('attendance')">✓ <span data-i18n="attendance">Attendance</span></button>
+<button class="btn good" onclick="go('payment')">₹ <span data-i18n="payment">Payment</span></button>
+<button class="btn soft" onclick="go('reports')">📊 <span data-i18n="reports">Reports</span></button>
+</div></div>
+<div class="card"><div class="sectionHead"><div><h3 data-i18n="moneySafety">Money Safety</h3><div class="muted" data-i18n="localRecords">Your records are stored locally on this device.</div></div><button class="btn soft" onclick="go('backup')" data-i18n="backup">Backup</button></div><div class="notice success" style="margin-top:9px" data-i18n="backupNotice">No automatic deletion. Use Backup & Restore before changing phones or clearing browser data.</div></div>
+</section>
+
+<section id="ai" class="hidden">
+<div class="card hero"><div class="sectionHead"><div><h2>🤖 AI Hisab Assistant</h2><div class="muted">Aapke app ke records se turant hisab, site aur attendance ka summary.</div></div><span class="pill" style="background:#ffffff22;color:#fff">AI</span></div></div>
+<div class="card"><div class="formgrid"><div><label>AI se kya dekhna hai?</label><select id="aiMode"><option value="today">Aaj ka hisab</option><option value="workers">Labour & Sites</option><option value="payable">Kisko kitna dena hai</option><option value="projects">Project-wise summary</option></select></div><div><label>Project (optional)</label><select id="aiProject"><option value="">All Projects</option></select></div><div class="full"><button class="btn primary" style="width:100%" onclick="runLocalAI()">🤖 AI Summary Banाओ</button></div></div></div>
+<div id="aiResult" class="card"><div class="empty">AI Summary देखने के लिए ऊपर button दबाएँ।</div></div>
+<div class="card notice">ℹ️ यह version आपके फोन में saved Labour Hisab data का local AI-style analysis करता है। किसी external AI service/API को data नहीं भेजता।</div>
+</section>
+
+<section id="future" class="hidden"><div class="card hero"><div class="sectionHead"><div><h2>🔮 Future Labour</h2><div class="muted">Aage ki date par kaun sa labour kis Project / Site par kaam karega.</div></div><span class="pill" style="background:#ffffff22;color:#fff">PLAN</span></div></div><div class="card"><div class="formgrid"><div><label>📅 Future Date / तारीख</label><input id="futureDate" type="date"></div><div><label>👷 Labour / मजदूर</label><select id="futureWorker"></select></div><div><label>🏗️ Project / Site</label><select id="futureProject"></select></div><div><label>💰 Daily Rate</label><input id="futureRate" type="number" min="0"></div><div class="full"><label>📝 Note / काम</label><input id="futureNote" placeholder="जैसे: Krishna Nagar plaster work"></div></div><div class="actions" style="margin-top:10px"><button class="btn primary" onclick="addFuturePlan()">➕ Future Labour Save</button><button class="btn soft" onclick="futureDate.value=todayISO();renderFuture()">आज</button></div></div><div class="card"><div class="sectionHead"><div><h3>📊 Future Summary</h3><div class="muted">Date, site और estimated labour cost.</div></div><input id="futureFilterDate" type="date" style="max-width:170px" onchange="renderFuture()"></div><div id="futureSummary"></div></div><div id="futureList" class="list"></div></section><section id="projects" class="hidden"><div class="card"><div class="sectionHead"><div><h2 data-i18n="projects">Projects / Sites</h2><div class="muted" data-i18n="projectSub">Keep client and site details in one place.</div></div><button class="btn primary" onclick="toggle('projectForm')" data-i18n="addProject">Add Project</button></div><div id="projectForm" class="hidden" style="margin-top:10px"><div class="formgrid"><div><label data-i18n="projectName">Project name</label><input id="prName"></div><div><label data-i18n="client">Client name</label><input id="prClient"></div><div class="full"><label data-i18n="address">Address</label><input id="prAddress"></div><div><label data-i18n="phone">Phone</label><input id="prPhone"></div><div><label data-i18n="manager">Manager</label><input id="prManager"></div></div><div class="actions" style="margin-top:10px"><button class="btn primary" onclick="addProject()" data-i18n="save">💾 Save Project</button><button class="btn ghost" onclick="toggle('projectForm')" data-i18n="cancel">Cancel</button></div></div></div><div id="projectList" class="list"></div></section>
+
+<section id="workers" class="hidden"><div class="card"><div class="sectionHead"><div><h2 data-i18n="workers">Labour</h2><div class="muted" data-i18n="workerSub">Photo, name, phone, role, rate and project.</div></div><button class="btn primary" onclick="openWorkerForm()" data-i18n="addWorker">+ Add Labour</button></div><div id="workerForm" class="hidden" style="margin-top:10px"><input id="wId" type="hidden"><div class="formgrid"><div><label data-i18n="name">Name</label><input id="wName"></div><div><label data-i18n="phone">Phone</label><input id="wPhone" inputmode="tel"></div><div><label data-i18n="role">Role</label><select id="wRole"></select></div><div><label data-i18n="dailyRate">Daily rate</label><input id="wRate" type="number" value="500"></div><div><label data-i18n="otRate">OT rate / hour</label><input id="wOtRate" type="number" value="0"></div><div><label data-i18n="project">Project / Site</label><select id="wProject"></select></div><div><label data-i18n="joinDate">Join date</label><input id="wJoin" type="date"></div><div><label data-i18n="address">Address</label><input id="wAddress"></div><div class="full"><label data-i18n="photo">Photo</label><input id="wPhoto" type="file" accept="image/*" capture="environment"></div></div><div class="actions" style="margin-top:10px"><button class="btn primary" onclick="saveWorker()" data-i18n="save">Save</button><button class="btn ghost" onclick="closeWorkerForm()" data-i18n="cancel">Cancel</button></div></div></div><div class="card"><input id="workerSearch" data-i18n-placeholder="searchWorker" placeholder="Search labour..." oninput="renderWorkers()"></div><div id="workerList" class="list"></div></section>
+
+<section id="attendance" class="hidden"><div class="card"><div class="sectionHead"><div><h2 data-i18n="attendance">Attendance</h2><div class="muted" data-i18n="attendanceSub">Present = 1 day • Half = 0.5 day • Absent = 0 • OT is extra.</div></div><input id="attDate" type="date" style="max-width:170px" onchange="renderAttendance()"></div></div><div class="card"><div class="notice" style="margin-bottom:10px">📍 <b>Daily Site / रोज की साइट:</b> पहले Projects / Sites में Project Name बनाएं। फिर हर मजदूर के सामने आज का <b>Project Name / प्रोजेक्ट का नाम</b> चुनें। तारीख बदलकर कल की अलग साइट चुन सकते हैं। इससे साफ रिकॉर्ड रहेगा कि कौन मजदूर किस दिन किस साइट पर काम कर रहा था।</div><div class="actions" style="margin-bottom:10px"><button class="btn primary" onclick="go('projects');setTimeout(()=>document.getElementById('projectForm').classList.remove('hidden'),50)">Project Name जोड़ें</button></div><div class="att"><b data-i18n="worker">Labour / मजदूर</b><b>🏗️ Project Name / प्रोजेक्ट का नाम</b><b>P</b><b>HF</b><b>A</b><b>OT</b><b></b></div><div id="attList"></div></div></section>
+
+<section id="payment" class="hidden"><div class="card"><h2 data-i18n="payment">Payment & Advance</h2><div class="notice warn" data-i18n="paymentNotice">Payment reduces the worker's payable balance. Advance is money given before it is earned and remains as advance until future attendance earns it.</div><div class="formgrid" style="margin-top:10px"><div><label data-i18n="worker">Labour</label><select id="payWorker"></select></div><div><label data-i18n="amount">Amount paid</label><input id="payAmount" type="number" min="1"></div><div><label data-i18n="type">Type</label><select id="payType"><option value="Payment">💵 Payment / भुगतान</option><option value="Advance">💰 Advance / एडवांस</option></select></div><div><label data-i18n="date">Date</label><input id="payDate" type="date"></div><div class="full"><label data-i18n="note">Note</label><input id="payNote"></div></div><div class="actions" style="margin-top:10px"><button class="btn primary" onclick="addPayment()" data-i18n="savePayment">💵 Save Payment</button><button class="btn soft" onclick="payType.value='Advance';payAmount.focus()">💰 Add Advance</button></div></div><div id="paymentList" class="list"></div></section>
+
+<section id="cashbook" class="hidden"><div class="card"><div class="sectionHead"><div><h2 data-i18n="cashbook">Project Cashbook</h2><div class="muted" data-i18n="cashSub">Track business income and expenses.</div></div></div><div class="formgrid"><div><label data-i18n="project">Project</label><select id="cashProject"></select></div><div><label data-i18n="amount">Amount</label><input id="cashAmount" type="number"></div><div><label data-i18n="type">Type</label><select id="cashType"><option value="Income">💰 Income / 💰 आय</option><option value="Expense">💸 Expense / 💸 खर्च</option></select></div><div><label data-i18n="date">Date</label><input id="cashDate" type="date"></div><div class="full"><label data-i18n="description">Description</label><input id="cashNote"></div></div><button class="btn primary" style="margin-top:10px" onclick="addCash()" data-i18n="addEntry">Add Entry</button></div><div id="cashList" class="list"></div></section>
+
+<section id="reports" class="hidden"><div class="card"><div class="sectionHead"><div><h2 data-i18n="reports">Reports</h2><div class="muted" data-i18n="reportSub">Labour statement, attendance totals and current balance.</div></div><div class="actions"><button class="btn soft" onclick="copyCurrentReport()">📋 Copy</button><button class="btn good" onclick="whatsappCurrentReport()">📲 WhatsApp Send</button><button class="btn soft" onclick="exportExcel()">📗 Excel Sheet</button><button class="btn soft" onclick="window.print()" data-i18n="printPdf">🖨️ Print / Save PDF</button></div></div><label data-i18n="selectWorker">👷 Select Labour / मजदूर चुनें</label><select id="reportWorker" onchange="renderReport()"></select><div id="reportBody" style="margin-top:10px"></div></div></section>
+
+<section id="backup" class="hidden"><div class="card"><h2 data-i18n="backupRestore">Backup & Restore</h2><div class="notice" data-i18n="backupDesc">Backup creates a JSON file containing your app records. Restore replaces the current records after confirmation.</div><div class="actions" style="margin-top:12px"><button class="btn primary" onclick="backupData()" data-i18n="downloadBackup">💾 Download Backup</button><button class="btn good" onclick="exportExcel()">📗 Excel Sheet</button><button class="btn soft" onclick="document.getElementById('restoreFile').click()" data-i18n="restoreBackup">Restore Backup</button><input id="restoreFile" type="file" accept="application/json,.json" class="hidden" onchange="restoreData(event)"></div></div><div class="card"><h3 data-i18n="dataStatus">Data status</h3><div class="line"><span data-i18n="storage">Storage</span><b>Local device</b></div><div class="line"><span data-i18n="offline">Offline</span><b class="green">Ready</b></div><div class="line"><span data-i18n="autoDelete">Automatic deletion</span><b class="green">No</b></div></div></section>
+
+<section id="about" class="hidden"><div class="card"><div class="sectionHead"><div><h2>ℹ️ About Labour Hisab</h2><div class="muted">Simple labour attendance, payment and project हिसाब.</div></div><span class="pill">V12</span></div><div class="line"><span>🏠 App</span><b>Labour Hisab</b></div><div class="line"><span>👷 Purpose</span><b>Labour • Attendance • Payment</b></div><div class="line"><span>💾 Data</span><b>Offline on this device</b></div><div class="line"><span>🌐 Languages</span><b>English + हिन्दी + 6 more</b></div></div><div class="card"><h3>✨ Features</h3><div class="actions" style="margin-top:10px"><span class="pill">👷 Labour</span><span class="pill">🗓️ Attendance</span><span class="pill">💵 Payment</span><span class="pill">💰 Advance</span><span class="pill">📊 Reports</span><span class="pill">📗 Excel</span><span class="pill">📲 WhatsApp</span><span class="pill">📞 Ring</span></div></div></section><section id="settings" class="hidden"><div class="card"><h2 data-i18n="settings">Settings</h2><div class="profile"><span class="heroEmoji" style="width:60px;height:60px;font-size:30px"><img src="icon-192.png" alt="" onerror="this.remove()">👷</span><div><b id="setCompany">Labour Hisab</b><div class="muted" id="setOwner"></div></div></div><div class="actions" style="margin-top:12px"><button class="btn soft" onclick="editProfile()" data-i18n="editProfile">Edit Profile & Rates</button><button class="btn danger" onclick="resetAll()" data-i18n="reset">Reset App Data</button></div></div><div class="card"><h3>WhatsApp</h3><div class="notice success">📲 WhatsApp chat + 📞 Ring button. PC/Laptop par WhatsApp Web/chat khulega; phone par WhatsApp/phone calling option available hone par open hoga.</div></div><div class="card"><h3 data-i18n="privacy">Privacy & Security</h3><p class="muted" data-i18n="privacyText">This offline version keeps records in browser/device storage. It does not send labour records to a server.</p><button class="btn soft" onclick="openPrivacy()" data-i18n="privacyPolicy">Read Privacy Policy</button></div></section>
+</main>
+<footer><div class="footerLinks"><button onclick="openPrivacy()" data-i18n="privacyPolicy">Privacy Policy</button><button onclick="go('backup')" data-i18n="backupRestore">Backup & Restore</button><button onclick="go('settings')" data-i18n="settings">Settings</button><button onclick="go('about')">ℹ️ About</button></div><div style="margin-top:8px">Labour Hisab • Offline-first construction attendance & payment</div></footer>
+
+<div id="workerModal" class="modal hidden"><div class="modalBox"><button class="close" onclick="closeWorkerModal()">✕</button><h2 id="modalWorkerName">Worker</h2><div id="modalWorkerBody"></div></div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCpp-iQYenlfvszliQ8DGPD_F4H-NIpZoE",
+  authDomain: "labour-hisab-ace9b.firebaseapp.com",
+  projectId: "labour-hisab-ace9b",
+  storageBucket: "labour-hisab-ace9b.firebasestorage.app",
+  messagingSenderId: "1029728537657",
+  appId: "1:1029728537657:web:aeeb9b7fdccdde7d6551e8",
+  measurementId: "G-EHD2RRGLGV"
+};
+firebase.initializeApp(firebaseConfig);
+const fbAuth = firebase.auth();
+const fbDb = firebase.firestore();
+
+const KEY='labour_hisab_final_v2';
+const LEGACY_KEYS=['labour_hisab_final_v1','labour_hisab_final'];
+const todayISO=()=>new Date().toISOString().slice(0,10);
+const fresh=()=>({profile:null,projects:[],workers:[],attendance:{},payments:[],cash:[],futurePlans:[],lang:'en'});
+let db=load(), current='dashboard';
+let firebaseUser=null;
+let firebaseReady=false;
+let firebaseSyncing=false;
+let firebaseSyncQueued=false;
+let firebaseHydrating=false;
+applyTheme();
+
+function load(){try{let raw=localStorage.getItem(KEY);if(!raw){for(const k of LEGACY_KEYS){raw=localStorage.getItem(k);if(raw)break}}return {...fresh(),...(raw?JSON.parse(raw):{})}}catch(e){return fresh()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll();if(firebaseUser&&!firebaseHydrating){if(firebaseSyncing)firebaseSyncQueued=true;else syncDbToFirestore().catch(err=>console.error('Firestore sync failed:',err))}}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function money(n){return '₹'+Math.round(Number(n)||0).toLocaleString('en-IN')}
+function initials(n){return String(n||'?').trim().split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase()}
+function toggle(id){document.getElementById(id).classList.toggle('hidden')}
+function go(id){let target=id;if(id==='advance'){target='payment';current='payment';setTimeout(()=>{if(window.payType)payType.value='Advance'},0)}else current=id;document.querySelectorAll('main>section').forEach(s=>s.classList.add('hidden'));document.getElementById(target).classList.remove('hidden');document.querySelectorAll('#nav button,#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.id===id));renderAll();window.scrollTo({top:0,behavior:'smooth'})}
+
+const T={
+en:{dashboard:'Dashboard',projects:'Projects',workers:'Labour',attendance:'Attendance',payment:'Payment',advance:'Advance',future:'Future Labour',cashbook:'Cashbook',reports:'Reports',backup:'Backup',settings:'Settings',welcome:'Welcome to Labour Hisab',profileOnce:'Set your profile once. Your data stays on this device and works offline.',createProfile:'Create your profile',name:'Name',surname:'Surname',company:'Company / Business',mobile:'Mobile number',workerRate:'Labour rate / day',headRate:'Head Labour / Mistri / day',managerRate:'Manager / day',skilledRate:'Skilled / head skilled / day',rateNote:"These are default rates. You can change a labour's rate when adding or editing them. Attendance automatically calculates earned pay.",continue:'Create & Continue',offline:'OFFLINE READY',totalProjects:'Total Projects',completed:'Completed',income:'Overall Income',expenses:'Overall Expenses',payable:'Payables',today:'Today',quickView:'Quick view of work and money',quickActions:'Quick Actions',quickActionsSub:'Common tasks in one tap',markAttendance:'Mark Attendance',presentHalf:'Present / Half',earnedToday:'Earned today',paidToday:'Paid today',moneySafety:'Money Safety',localRecords:'Your records are stored locally on this device.',backupNotice:'No automatic deletion. Use Backup & Restore before changing phones or clearing browser data.',addProject:'Add Project',projectSub:'Keep client and site details in one place.',projectName:'Project name',client:'Client name',address:'Address',phone:'Phone',manager:'Manager',save:'Save',cancel:'Cancel',workerSub:'Photo, name, phone, role, rate and project.',addWorker:'Add Labour',role:'Role',dailyRate:'Daily rate',otRate:'OT rate / hour',project:'Project / Site',joinDate:'Join date',photo:'Photo',searchWorker:'Search labour...',attendanceSub:'Present = 1 day • Half = 0.5 day • Absent = 0 • OT is extra.',worker:'Labour',paymentNotice:'Payment reduces the labour payable balance. Advance is money given before it is earned and remains as advance until future attendance earns it.',amount:'Amount paid',type:'Type',date:'Date',note:'Note',paymentType:'Payment / भुगतान',advanceType:'Advance / एडवांस',incomeType:'Income / आय',expenseType:'Expense / खर्च',delete:'Delete',ring:'Ring',whatsapp:'WhatsApp',edit:'Edit',view:'View',close:'Close',noWorkers:'No labour yet.',noPayments:'No payments yet.',noPhone:'No phone',noProject:'No project',savePayment:'Save Payment',cashSub:'Track business income and expenses.',description:'Description',addEntry:'Add Entry',reportSub:'Labour statement, attendance totals and current balance.',printPdf:'Print / Save PDF',selectWorker:'Select labour',backupRestore:'Backup & Restore',backupDesc:'Backup creates a JSON file containing your app records. Restore replaces the current records after confirmation.',downloadBackup:'Download Backup',restoreBackup:'Restore Backup',dataStatus:'Data status',storage:'Storage',autoDelete:'Automatic deletion',editProfile:'Edit Profile & Rates',reset:'Reset App Data',privacy:'Privacy & Security',privacyText:'This offline version keeps records in browser/device storage. It does not send labour records to a server.',privacyPolicy:'Read Privacy Policy',active:'Active',completedLabel:'Completed',reopen:'Reopen',markCompleted:'Mark Completed',noWorkers:'No labour yet.',noPayments:'No payments yet.',noPhone:'No phone',noProject:'No project',earned:'Earned',paid:'Paid',balance:'Balance',advance:'Advance',fullDays:'Full days',halfDays:'Half days',otHours:'OT hours',totalEarned:'Total earned',totalPaid:'Total paid',balanceLabel:'Balance / बाकी',advanceRemaining:'Advance remaining',attendanceDates:'Recorded attendance dates',site:'Site / साइट',dailySite:'Daily Site / रोज की साइट',siteHistory:'Site History / साइट इतिहास',noSite:'No site selected',todaySite:'Today site / आज की साइट'},
+hi:{dashboard:'डैशबोर्ड',projects:'प्रोजेक्ट',workers:'मजदूर',attendance:'हाजिरी',payment:'भुगतान',advance:'एडवांस',future:'Future Labour',cashbook:'कैशबुक',reports:'रिपोर्ट',backup:'बैकअप',settings:'सेटिंग',welcome:'लेबर हिसाब में आपका स्वागत है',profileOnce:'अपनी प्रोफाइल एक बार भरें। आपका डेटा इसी डिवाइस में ऑफलाइन रहेगा।',createProfile:'अपनी प्रोफाइल बनाएं',name:'नाम',surname:'उपनाम',company:'कंपनी / व्यवसाय',mobile:'मोबाइल नंबर',workerRate:'मजदूर रेट / दिन',headRate:'हेड मजदूर / मिस्त्री / दिन',managerRate:'मैनेजर / दिन',skilledRate:'कुशल / हेड कुशल / दिन',rateNote:'ये डिफॉल्ट रेट हैं। मजदूर जोड़ते या एडिट करते समय रेट बदल सकते हैं। हाजिरी से कमाई अपने आप निकलेगी।',continue:'बनाएं और आगे बढ़ें',offline:'ऑफलाइन तैयार',totalProjects:'कुल प्रोजेक्ट',completed:'पूरा',income:'कुल आय',expenses:'कुल खर्च',payable:'बाकी भुगतान',today:'आज',quickView:'आज के काम और पैसे का छोटा हिसाब',quickActions:'Quick Actions',quickActionsSub:'सामान्य काम एक टैप में',markAttendance:'हाजिरी लगाएं',presentHalf:'पूरा / आधा',earnedToday:'आज की कमाई',paidToday:'आज भुगतान',moneySafety:'पैसे की सुरक्षा',localRecords:'आपका रिकॉर्ड इसी डिवाइस में सेव है।',backupNotice:'डेटा अपने आप डिलीट नहीं होगा। फोन बदलने या ब्राउज़र साफ करने से पहले बैकअप लें।',addProject:'+ प्रोजेक्ट जोड़ें',projectSub:'क्लाइंट और साइट की जानकारी एक जगह रखें।',projectName:'प्रोजेक्ट का नाम',client:'क्लाइंट का नाम',address:'पता',phone:'फोन',manager:'मैनेजर',save:'सेव',cancel:'रद्द',workerSub:'फोटो, नाम, फोन, काम, रेट और साइट।',addWorker:'+ मजदूर जोड़ें',role:'काम / भूमिका',dailyRate:'दैनिक रेट',otRate:'ओटी रेट / घंटा',project:'प्रोजेक्ट / साइट',joinDate:'जुड़ने की तारीख',photo:'फोटो',searchWorker:'मजदूर खोजें...',attendanceSub:'P = पूरा दिन • HF = आधा दिन • A = गैरहाजिर • OT अलग।',worker:'मजदूर',paymentNotice:'भुगतान से मजदूर की बाकी रकम घटती है। एडवांस पहले दिया गया पैसा है, जो आगे की कमाई में समायोजित होगा।',amount:'रकम',type:'प्रकार',date:'तारीख',note:'नोट',paymentType:'भुगतान / Payment',advanceType:'एडवांस / Advance',incomeType:'आय / Income',expenseType:'खर्च / Expense',delete:'डिलीट',ring:'कॉल',whatsapp:'व्हाट्सऐप',edit:'एडिट',view:'देखें',close:'बंद करें',noWorkers:'अभी कोई मजदूर नहीं है।',noPayments:'अभी कोई भुगतान नहीं है।',noPhone:'फोन नहीं',noProject:'प्रोजेक्ट नहीं',savePayment:'भुगतान सेव करें',cashSub:'व्यवसाय की आय और खर्च लिखें।',description:'विवरण',addEntry:'एंट्री जोड़ें',reportSub:'मजदूर का पूरा स्टेटमेंट और बाकी हिसाब।',printPdf:'प्रिंट / PDF सेव',selectWorker:'मजदूर चुनें',backupRestore:'बैकअप और रिस्टोर',backupDesc:'बैकअप में आपके ऐप का रिकॉर्ड JSON फाइल में सेव होगा। रिस्टोर करने पर पुराना रिकॉर्ड बदल जाएगा।',downloadBackup:'बैकअप डाउनलोड',restoreBackup:'बैकअप रिस्टोर',dataStatus:'डेटा स्थिति',storage:'स्टोरेज',autoDelete:'अपने आप डिलीट',editProfile:'प्रोफाइल और रेट एडिट',reset:'ऐप डेटा रीसेट',privacy:'प्राइवेसी और सुरक्षा',privacyText:'यह ऑफलाइन ऐप रिकॉर्ड को डिवाइस के ब्राउज़र स्टोरेज में रखता है और सर्वर पर नहीं भेजता।',privacyPolicy:'प्राइवेसी पॉलिसी',active:'सक्रिय',completedLabel:'पूरा',reopen:'फिर से खोलें',markCompleted:'पूरा हुआ',noWorkers:'अभी कोई मजदूर नहीं है।',noPayments:'अभी कोई भुगतान नहीं है।',noPhone:'फोन नहीं',noProject:'प्रोजेक्ट नहीं',earned:'कमाई',paid:'भुगतान',balance:'बाकी',advance:'एडवांस',fullDays:'पूरे दिन',halfDays:'आधे दिन',otHours:'ओटी घंटे',totalEarned:'कुल कमाई',totalPaid:'कुल भुगतान',balanceLabel:'बाकी',advanceRemaining:'बाकी एडवांस',attendanceDates:'दर्ज हाजिरी की तारीखें',site:'साइट',dailySite:'रोज की साइट',siteHistory:'साइट इतिहास',noSite:'साइट नहीं चुनी',todaySite:'आज की साइट'},
+mr:{dashboard:'डॅशबोर्ड',projects:'प्रकल्प',workers:'कामगार',attendance:'हजेरी',payment:'पेमेंट',cashbook:'कॅशबुक',reports:'रिपोर्ट',backup:'बॅकअप',settings:'सेटिंग',name:'नाव',company:'कंपनी / व्यवसाय',mobile:'मोबाईल नंबर',today:'आज',markAttendance:'हजेरी भरा',workers:'कामगार',save:'सेव्ह',cancel:'रद्द',addWorker:'+ कामगार जोडा',addProject:'+ प्रकल्प जोडा',address:'पत्ता',phone:'फोन',role:'काम / भूमिका',dailyRate:'दैनिक दर',project:'प्रकल्प / साइट',photo:'फोटो',attendance:'हजेरी',payment:'पेमेंट',reports:'रिपोर्ट',settings:'सेटिंग',backupRestore:'बॅकअप आणि रिस्टोर',privacyPolicy:'गोपनीयता धोरण'},
+gu:{dashboard:'ડેશબોર્ડ',projects:'પ્રોજેક્ટ',workers:'મજૂર',attendance:'હાજરી',payment:'ચુકવણી',cashbook:'કેશબુક',reports:'રિપોર્ટ',backup:'બેકઅપ',settings:'સેટિંગ',name:'નામ',company:'કંપની / વ્યવસાય',mobile:'મોબાઇલ નંબર',today:'આજે',markAttendance:'હાજરી ભરો',save:'સેવ',cancel:'રદ',addWorker:'+ મજૂર ઉમેરો',addProject:'+ પ્રોજેક્ટ ઉમેરો',address:'સરનામું',phone:'ફોન',role:'કામ / ભૂમિકા',dailyRate:'દૈનિક દર',project:'પ્રોજેક્ટ / સાઇટ',photo:'ફોટો'},
+pa:{dashboard:'ਡੈਸ਼ਬੋਰਡ',projects:'ਪ੍ਰੋਜੈਕਟ',workers:'ਮਜ਼ਦੂਰ',attendance:'ਹਾਜ਼ਰੀ',payment:'ਭੁਗਤਾਨ',cashbook:'ਕੈਸ਼ਬੁੱਕ',reports:'ਰਿਪੋਰਟ',backup:'ਬੈਕਅੱਪ',settings:'ਸੈਟਿੰਗ',name:'ਨਾਮ',company:'ਕੰਪਨੀ / ਕਾਰੋਬਾਰ',mobile:'ਮੋਬਾਈਲ ਨੰਬਰ',today:'ਅੱਜ',markAttendance:'ਹਾਜ਼ਰੀ ਲਗਾਓ',save:'ਸੇਵ',cancel:'ਰੱਦ',addWorker:'+ ਮਜ਼ਦੂਰ ਜੋੜੋ',addProject:'+ ਪ੍ਰੋਜੈਕਟ ਜੋੜੋ',address:'ਪਤਾ',phone:'ਫੋਨ',role:'ਕੰਮ / ਭੂਮਿਕਾ',dailyRate:'ਰੋਜ਼ਾਨਾ ਰੇਟ',project:'ਪ੍ਰੋਜੈਕਟ / ਸਾਈਟ',photo:'ਫੋਟੋ'},
+bn:{dashboard:'ড্যাশবোর্ড',projects:'প্রজেক্ট',workers:'শ্রমিক',attendance:'হাজিরা',payment:'পেমেন্ট',cashbook:'ক্যাশবুক',reports:'রিপোর্ট',backup:'ব্যাকআপ',settings:'সেটিংস',name:'নাম',company:'কোম্পানি / ব্যবসা',mobile:'মোবাইল নম্বর',today:'আজ',markAttendance:'হাজিরা দিন',save:'সেভ',cancel:'বাতিল',addWorker:'+ শ্রমিক যোগ করুন',addProject:'+ প্রজেক্ট যোগ করুন',address:'ঠিকানা',phone:'ফোন',role:'কাজ / ভূমিকা',dailyRate:'দৈনিক রেট',project:'প্রজেক্ট / সাইট',photo:'ছবি'},
+ta:{dashboard:'டாஷ்போர்டு',projects:'திட்டங்கள்',workers:'தொழிலாளர்கள்',attendance:'வருகை',payment:'பணம்',cashbook:'கணக்குப்புத்தகம்',reports:'அறிக்கைகள்',backup:'காப்புப்பிரதி',settings:'அமைப்புகள்',name:'பெயர்',company:'நிறுவனம் / வணிகம்',mobile:'மொபைல் எண்',today:'இன்று',markAttendance:'வருகை பதிவு',save:'சேமி',cancel:'ரத்து',addWorker:'+ தொழிலாளரை சேர்',addProject:'+ திட்டம் சேர்',address:'முகவரி',phone:'தொலைபேசி',role:'வேலை / பங்கு',dailyRate:'தினசரி ஊதியம்',project:'திட்டம் / தளம்',photo:'புகைப்படம்'},
+te:{dashboard:'డ్యాష్‌బోర్డ్',projects:'ప్రాజెక్టులు',workers:'కార్మికులు',attendance:'హాజరు',payment:'చెల్లింపు',cashbook:'క్యాష్‌బుక్',reports:'నివేదికలు',backup:'బ్యాకప్',settings:'సెట్టింగ్స్',name:'పేరు',company:'కంపెనీ / వ్యాపారం',mobile:'మొబైల్ నంబర్',today:'ఈరోజు',markAttendance:'హాజరు నమోదు',save:'సేవ్',cancel:'రద్దు',addWorker:'+ కార్మికుడిని జోడించండి',addProject:'+ ప్రాజెక్ట్ జోడించండి',address:'చిరునామా',phone:'ఫోన్',role:'పని / పాత్ర',dailyRate:'రోజువారీ రేటు',project:'ప్రాజెక్ట్ / సైట్',photo:'ఫోటో'}
+};
+function t(k){return (T[db.lang]&&T[db.lang][k])||T.en[k]||k}
+function applyLanguage(){
+document.documentElement.lang=db.lang||'en';document.getElementById('langSelect').value=db.lang||'en';
+document.querySelectorAll('[data-i18n]').forEach(el=>{let k=el.getAttribute('data-i18n');el.textContent=t(k)});
+document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>el.placeholder=t(el.getAttribute('data-i18n-placeholder')));
+renderRoleOptions(window.wRole?.value||'worker');
+renderPaymentTypes();
+renderCashTypes();
+buildNav();
+}
+function renderPaymentTypes(){if(!window.payType)return;let v=payType.value||'Payment';payType.innerHTML=`<option value="Payment">💵 ${db.lang==='hi'?'भुगतान / Payment':'Payment / भुगतान'}</option><option value="Advance">💰 ${db.lang==='hi'?'एडवांस / Advance':'Advance / एडवांस'}</option>`;payType.value=v}
+function renderCashTypes(){if(!window.cashType)return;let v=cashType.value||'Income';cashType.innerHTML=`<option value="Income">💰 ${db.lang==='hi'?'आय / Income':'Income / आय'}</option><option value="Expense">💸 ${db.lang==='hi'?'खर्च / Expense':'Expense / खर्च'}</option>`;cashType.value=v}
+function setLang(v){db.lang=v;save();applyLanguage();renderAll()}
+function applyTheme(){
+  const dark=localStorage.getItem('labour_hisab_dark')==='1';
+  document.documentElement.classList.toggle('dark',dark);
+  const b=document.getElementById('themeToggle');
+  if(b){b.innerHTML=dark?'☀️':'🌙';b.setAttribute('aria-label',dark?'Light mode':'Dark mode');b.classList.add('lh-icon-only');}
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.content=dark?'#0b1220':'#0b5cff';
+}
+function toggleDarkMode(){
+  const dark=document.documentElement.classList.contains('dark');
+  localStorage.setItem('labour_hisab_dark',dark?'0':'1');
+  applyTheme();
+}
+
+function renderAIProjects(){
+if(typeof aiProject==='undefined')return;
+aiProject.innerHTML='<option value="">All Projects</option>'+db.projects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')
+}
+function runLocalAI(){
+let mode=aiMode.value, pid=+aiProject.value||0, workers=db.workers.filter(w=>!pid||w.projectId===pid), today=todayISO(), att=db.attendance[today]||{};
+let present=[],half=[],absent=[],siteCounts={};
+workers.forEach(w=>{let x=attStatus(att,w.id);if(x.status==='P')present.push(w);else if(x.status==='H')half.push(w);else if(x.status==='A')absent.push(w);let p=db.projects.find(p=>p.id===w.projectId);let name=p?.name||'No Project';siteCounts[name]=(siteCounts[name]||0)+1});
+let t=totals(), html='';
+if(mode==='today') html=`<h3>🤖 Aaj ka AI Hisab</h3><div class="kpis"><div class="mini"><span>Labour</span><b>${workers.length}</b></div><div class="mini"><span>Present</span><b>${present.length}</b></div><div class="mini"><span>Half</span><b>${half.length}</b></div><div class="mini"><span>Absent</span><b>${absent.length}</b></div></div><div class="line"><span>Aaj ki estimated earning</span><b>${money(workers.reduce((a,w)=>{let x=attStatus(att,w.id);return a+(x.status==='P'?w.rate:x.status==='H'?w.rate/2:0)+(x.ot||0)*(w.otRate||0)},0))}</b></div><div class="notice" style="margin-top:10px">${present.length?'Aaj '+present.length+' labour present hain.':'Aaj attendance mark nahi hui hai.'}</div>`;
+else if(mode==='workers') html=`<h3>🤖 Labour & Sites</h3>${workers.length?workers.map(w=>{let p=db.projects.find(p=>p.id===w.projectId);let x=attStatus(att,w.id);return `<div class="line"><span>👷 ${esc(w.name)}<small class="muted"> • ${esc(roleText(w.role))}</small></span><b>🏗️ ${esc(p?.name||'No Project')} • ${x.status||'Not marked'}</b></div>`}).join(''):'<div class="empty">No labour.</div>'}`;
+else if(mode==='payable') html=`<h3>🤖 Payment Summary</h3>${workers.map(w=>{let s=workerStats(w);return `<div class="line"><span>👷 ${esc(w.name)}</span><b class="red">${money(s.balance)}</b></div>`}).join('')||'<div class="empty">No labour.</div>'}<div class="notice warn" style="margin-top:10px">Total payable: <b>${money(workers.reduce((a,w)=>a+workerStats(w).balance,0))}</b></div>`;
+else html=`<h3>🤖 Project-wise Summary</h3>${Object.entries(siteCounts).map(([name,count])=>`<div class="line"><span>🏗️ ${esc(name)}</span><b>${count} worker${count===1?'':'s'}</b></div>`).join('')||'<div class="empty">No project/worker data.</div>'}<div class="line"><span>Overall income</span><b class="green">${money(t.income)}</b></div><div class="line"><span>Overall expense</span><b class="red">${money(t.expense)}</b></div><div class="line"><span>Total payable</span><b class="amber">${money(t.balance)}</b></div>`;
+aiResult.innerHTML=html;
+}
+
+function buildNav(){let items=[['dashboard','🏠','dashboard'],['ai','🤖','AI'],['future','🔮','Future Labour'],['projects','🏗️','projects'],['workers','👷','workers'],['attendance','🗓️','attendance'],['payment','💵','payment'],['cashbook','📒','cashbook'],['reports','📊','reports'],['backup','💾','backup'],['settings','⚙️','settings'],['about','ℹ️','about']];nav.innerHTML=items.map(x=>`<button data-id="${x[0]}" onclick="go('${x[0]}')"><span class="navIcon">${x[1]}</span> ${t(x[2])}</button>`).join('');nav.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.id===current));let bottom=[['dashboard','🏠','dashboard'],['workers','👷','workers'],['attendance','🗓️','attendance'],['payment','💵','payment'],['reports','📊','reports'],['about','ℹ️','about']];bottomNav.innerHTML=bottom.map(x=>`<button data-id="${x[0]}" onclick="go('${x[0]}')"><span>${x[1]}</span>${t(x[2])}</button>`).join('');bottomNav.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.id===current))}
+function saveProfile(){
+let name=pName.value.trim(),company=pCompany.value.trim();if(!name||!company)return alert(db.lang==='hi'?'नाम और कंपनी भरें।':'Please enter name and company.');
+db.profile={name,surname:pSurname.value.trim(),company,phone:pPhone.value.trim(),rates:{worker:+rWorker.value||500,head:+rHead.value||1000,manager:+rManager.value||2000,skill:+rSkill.value||500}};
+save();go('dashboard')
+}
+function editProfile(){
+if(!db.profile){go('onboarding');return}
+pName.value=db.profile.name||'';pSurname.value=db.profile.surname||'';pCompany.value=db.profile.company||'';pPhone.value=db.profile.phone||'';
+rWorker.value=db.profile.rates?.worker||500;rHead.value=db.profile.rates?.head||1000;rManager.value=db.profile.rates?.manager||2000;rSkill.value=db.profile.rates?.skill||500;
+document.querySelectorAll('main>section').forEach(s=>s.classList.add('hidden'));onboarding.classList.remove('hidden');current='onboarding'
+}
+function openPrivacy(){const w=window.open('privacy-policy.html','_blank');if(!w)location.href='privacy-policy.html'}
+function addProject(){let name=prName.value.trim();if(!name)return alert('Enter project name.');db.projects.push({id:Date.now(),name,client:prClient.value.trim(),address:prAddress.value.trim(),phone:prPhone.value.trim(),manager:prManager.value.trim(),completed:false});['prName','prClient','prAddress','prPhone','prManager'].forEach(id=>document.getElementById(id).value='');document.getElementById('projectForm').classList.add('hidden');save()}
+function completeProject(id){let p=db.projects.find(x=>x.id===id);if(p){p.completed=!p.completed;save()}}
+function editProject(id){let p=db.projects.find(x=>x.id===id);if(!p)return;let name=prompt('Project name:',p.name||'');if(name===null)return;name=name.trim();if(!name)return;let client=prompt('Client name:',p.client||'');if(client===null)return;let address=prompt('Address:',p.address||'');if(address===null)return;let phone=prompt('Phone:',p.phone||'');if(phone===null)return;let manager=prompt('Manager:',p.manager||'');if(manager===null)return;Object.assign(p,{name,client:client.trim(),address:address.trim(),phone:phone.trim(),manager:manager.trim()});save()}
+function deleteProject(id){if(confirm('Delete this project? Labour records will remain.')){db.projects=db.projects.filter(p=>p.id!==id);save()}}
+function renderProjects(){let active=db.projects.filter(p=>!p.completed),done=db.projects.filter(p=>p.completed);projectList.innerHTML=(active.length?'<div class="muted">Active Projects</div>'+active.map(projectHTML).join(''):'<div class="empty">No active projects.</div>')+(done.length?'<div class="muted">Completed Projects</div>'+done.map(projectHTML).join(''):'')}
+function projectHTML(p){return `<div class="card projectCard"><div class="itemTop"><div><h3 style="margin:0">${esc(p.name)}</h3><div class="muted">${esc(p.client||'No client')} • ${esc(p.manager||'No manager')}</div></div><span class="pill">${p.completed?t('completedLabel'):t('active')}</span></div><div class="muted" style="margin-top:6px">${esc(p.address||'No address')} ${p.phone?'• '+esc(p.phone):''}</div><div class="actions" style="margin-top:9px"><button class="btn ${p.completed?'good':'soft'}" onclick="completeProject(${p.id})">${p.completed?t('reopen'):t('markCompleted')}</button><button class="iconBtn editIcon" title="Edit project" aria-label="Edit project" onclick="editProject(${p.id})">✏️</button><button class="btn danger" onclick="deleteProject(${p.id})">Delete</button></div></div>`}
+function projectOptions(selected=''){return '<option value="">No project</option>'+db.projects.filter(p=>!p.completed).map(p=>`<option value="${p.id}" ${String(selected)===String(p.id)?'selected':''}>${esc(p.name)}</option>`).join('')}
+function attendanceProjectOptions(selected=''){return '<option value="">🏗️ Select Project Name / प्रोजेक्ट चुनें</option>'+db.projects.map(p=>`<option value="${p.id}" ${String(selected)===String(p.id)?'selected':''}>${esc(p.name)}</option>`).join('')}
+function attendanceProjectName(id){let p=db.projects.find(x=>x.id===+id);return p?.name||t('noSite')}
+function workerSiteHistory(wid){return Object.entries(db.attendance).filter(([d,a])=>{let x=attStatus(a,wid);return x.status||x.projectId}).sort((a,b)=>b[0].localeCompare(a[0])).map(([d,a])=>{let x=attStatus(a,wid);return {date:d,status:x.status||'',ot:x.ot||0,projectId:x.projectId||null,project:attendanceProjectName(x.projectId)}})}
+const ROLE_DEFS=[
+ {key:'worker',en:'👷 Labour',hi:'👷 मजदूर'},
+ {key:'khuli',en:'👩 Khuli',hi:'👩 खुली'},
+ {key:'mistri',en:'👷 Mistri',hi:'👷 मिस्त्री'},
+ {key:'manager',en:'👨‍💼 Manager',hi:'👨‍💼 मैनेजर'},
+ {key:'electrician',en:'⚡ Electrician',hi:'⚡ इलेक्ट्रीशियन'},
+ {key:'carpenter',en:'🪚 Carpenter',hi:'🪚 बढ़ई'},
+ {key:'painter',en:'🎨 Painter',hi:'🎨 पेंटर'},
+ {key:'helper',en:'🧰 Helper',hi:'🧰 हेल्पर'},
+ {key:'driver',en:'🚚 Driver',hi:'🚚 ड्राइवर'},
+ {key:'cleaner',en:'🧹 Cleaner',hi:'🧹 सफाई कर्मचारी'}
+];
+function roleText(r){let d=ROLE_DEFS.find(x=>x.key===r||x.en===r||x.hi===r);return d?(db.lang==='hi'?d.hi:d.en):(r||'👷 Labour / मजदूर')}
+function roleKey(v){return ROLE_DEFS.find(x=>x.key===v||x.en===v||x.hi===v)?.key||'worker'}
+function renderRoleOptions(selected=''){
+ const sel=roleKey(selected);wRole.innerHTML=ROLE_DEFS.map(d=>`<option value="${d.key}" ${d.key===sel?'selected':''}>${esc(d.en)} / ${esc(d.hi)}</option>`).join('');
+}
+function defaultRate(role){let r=db.profile?.rates||{worker:500,head:1000,manager:2000,skill:500};let k=roleKey(role);if(k==='worker'||k==='khuli'||k==='helper'||k==='driver'||k==='cleaner')return r.worker;if(k==='mistri')return r.head;if(k==='manager')return r.manager;return r.skill}
+function openWorkerForm(id=''){
+wId.value=id||'';wName.value='';wPhone.value='';renderRoleOptions('worker');wRate.value=defaultRate('worker');wOtRate.value=0;wProject.innerHTML=projectOptions();wJoin.value=todayISO();wAddress.value='';wPhoto.value='';
+if(id){let w=db.workers.find(x=>x.id===+id);if(!w)return;wName.value=w.name||'';wPhone.value=w.phone||'';renderRoleOptions(w.role||'worker');wRate.value=w.rate||defaultRate(w.role);wOtRate.value=w.otRate||0;wProject.innerHTML=projectOptions(w.projectId);wJoin.value=w.joinDate||todayISO();wAddress.value=w.address||''}
+workerForm.classList.remove('hidden');workerForm.scrollIntoView({behavior:'smooth',block:'start'})
+}
+function closeWorkerForm(){workerForm.classList.add('hidden')}
+function saveWorker(){
+let name=wName.value.trim();if(!name)return alert('Enter worker name.');
+let id=+wId.value||0, existing=id?db.workers.find(x=>x.id===id):null, file=wPhoto.files?.[0];
+let finish=photo=>{
+let data={id:id||Date.now(),name,phone:wPhone.value.trim(),role:roleKey(wRole.value),roleLabel:roleText(wRole.value),rate:+wRate.value||defaultRate(wRole.value),otRate:+wOtRate.value||0,projectId:+wProject.value||null,joinDate:wJoin.value||todayISO(),address:wAddress.value.trim(),photo:photo!==undefined?photo:(existing?.photo||'')};
+if(existing)Object.assign(existing,data);else db.workers.push(data);
+closeWorkerForm();save()
+};
+if(file){let rd=new FileReader();rd.onload=()=>compress(rd.result,finish);rd.readAsDataURL(file)}else finish(undefined)
+}
+function compress(src,cb){let img=new Image();img.onload=()=>{let max=480,s=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*s));c.height=Math.max(1,Math.round(img.height*s));c.getContext('2d').drawImage(img,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};img.src=src}
+function removeWorker(id){if(confirm('Delete this worker and their attendance/payment links?')){db.workers=db.workers.filter(w=>w.id!==id);Object.keys(db.attendance).forEach(d=>delete db.attendance[d][id]);db.payments=db.payments.filter(p=>p.wid!==id);save()}}
+function renderWorkers(){wProject.innerHTML=projectOptions(wProject.value);let q=(workerSearch.value||'').toLowerCase();let list=db.workers.filter(w=>(w.name||'').toLowerCase().includes(q)||(w.role||'').toLowerCase().includes(q)||(w.phone||'').includes(q));workerList.innerHTML=list.length?list.map(workerHTML).join(''):'<div class="card empty">No labour yet.</div>'}
+function workerHTML(w){let st=workerStats(w),av=w.photo?`<img class="avatar" src="${w.photo}">`:`<div class="avatarText">${esc(initials(w.name))}</div>`;let p=db.projects.find(x=>x.id===w.projectId);return `<div class="card"><div class="person"><div>${av}</div><div><div class="itemTop"><button style="border:0;background:none;padding:0;font-weight:900;color:var(--text);font-size:16px" onclick="openWorkerModal(${w.id})">${esc(w.name)}</button><span class="pill">${esc(roleText(w.role))}</span></div><div class="muted">${esc(w.phone||t('noPhone'))} • ${esc(p?.name||t('noProject'))} • ${money(w.rate)}/day</div></div><div class="actions compactActions" aria-label="Labour actions"><button class="iconBtn wa" title="WhatsApp" aria-label="WhatsApp" onclick="whatsappWorker(${w.id})"></button><button class="iconBtn call" title="Call" aria-label="Call" onclick="callWorker(${w.id})"></button><button class="iconBtn editIcon" title="Edit Labour" aria-label="Edit Labour" onclick="openWorkerForm(${w.id})"></button><button class="iconBtn deleteAction" title="Delete Labour" aria-label="Delete Labour" onclick="removeWorker(${w.id})"></button></div></div><div class="kpis"><div class="mini"><span>${t('earned')}</span><b>${money(st.earned)}</b></div><div class="mini"><span>${t('paid')}</span><b>${money(st.paid)}</b></div><div class="mini"><span>${t('balance')}</span><b class="red">${money(st.balance)}</b></div><div class="mini"><span>${t('advance')}</span><b class="amber">${money(st.advance)}</b></div></div></div>`}
+function setAttProject(id,projectId){let d=attDate.value||todayISO();db.attendance[d]=db.attendance[d]||{};let old=attStatus(db.attendance[d],id);db.attendance[d][id]={status:old.status||'',ot:old.ot||0,projectId:+projectId||null};save()}
+function mark(id,status){let d=attDate.value||todayISO();db.attendance[d]=db.attendance[d]||{};let old=attStatus(db.attendance[d],id);db.attendance[d][id]={status,ot:old.ot||0,projectId:old.projectId||null};save()}
+function addOT(id){let d=attDate.value||todayISO(),old=attStatus(db.attendance[d]||{},id),w=db.workers.find(x=>x.id===id);let h=prompt('Overtime hours?',String(old.ot||1));if(h===null)return;let hours=Math.max(0,+h||0);db.attendance[d]=db.attendance[d]||{};db.attendance[d][id]={status:old.status||'P',ot:hours,projectId:old.projectId||null};if(w&&!w.otRate)w.otRate=Math.round((w.rate/8)*1.5);save()}
+function editAttendance(id){let d=attDate.value||todayISO(),old=attStatus(db.attendance[d]||{},id);let status=prompt('Status: P = Present, H = Half Day, A = Absent, blank = Clear',old.status||'');if(status===null)return;status=status.trim().toUpperCase();if(status==='HF')status='H';if(!['P','H','A',''].includes(status))return alert('Use P, H, A or blank.');let ot=prompt('OT hours:',String(old.ot||0));if(ot===null)return;let hours=Math.max(0,+ot||0);db.attendance[d]=db.attendance[d]||{};if(!status && !hours && !old.projectId){delete db.attendance[d][id]}else{db.attendance[d][id]={status,ot:hours,projectId:old.projectId||null}}save()}
+function clearAtt(id){let d=attDate.value||todayISO();if(db.attendance[d])delete db.attendance[d][id];save()}
+function attStatus(d,id){let x=d?.[id];return typeof x==='string'?{status:x,ot:0,projectId:null}:(x||{status:'',ot:0,projectId:null})}
+function workerStats(w){
+let earned=0,full=0,half=0,ot=0;
+Object.values(db.attendance).forEach(day=>{let x=attStatus(day,w.id);if(x.status==='P'){earned+=w.rate;full++}else if(x.status==='H'){earned+=w.rate/2;half++}if(x.ot){ot+=x.ot;earned+=x.ot*(w.otRate||0)}});
+let paid=db.payments.filter(p=>p.wid===w.id&&p.type!=='Advance').reduce((a,p)=>a+p.amount,0);
+let advanceGiven=db.payments.filter(p=>p.wid===w.id&&p.type==='Advance').reduce((a,p)=>a+p.amount,0);
+let earnedAfterPayment=earned-paid;
+let advance=Math.max(0,advanceGiven-earnedAfterPayment);
+let balance=earnedAfterPayment>0?Math.max(0,earnedAfterPayment-advanceGiven):earnedAfterPayment;
+return {earned,paid,balance,advance,advanceGiven,full,half,ot,days:full+half/2}
+}
+function renderAttendance(){
+attDate.value=attDate.value||todayISO();let d=db.attendance[attDate.value]||{};
+attList.innerHTML=db.workers.length?db.workers.map(w=>{let x=attStatus(d,w.id),s=x.status;return `<div class="att"><div style="display:flex;align-items:center;gap:8px"><div>${w.photo?`<img class="avatar" style="width:42px;height:42px" src="${w.photo}" alt="">`:`<div class="avatarText" style="width:42px;height:42px">${esc(initials(w.name))}</div>`}</div><div><button style="border:0;background:none;padding:0;text-align:left;font-weight:900" onclick="openWorkerModal(${w.id})">${esc(w.name)}</button><div class="muted">${esc(roleText(w.role))} • ${money(w.rate)}</div></div></div><select aria-label="Project Name / प्रोजेक्ट का नाम" style="min-width:190px;font-weight:800" onchange="setAttProject(${w.id},this.value)">${attendanceProjectOptions(x.projectId)}</select><button class="${s==='P'?'onP':''}" onclick="mark(${w.id},'P')">P</button><button class="${s==='H'?'onH':''}" onclick="mark(${w.id},'H')">HF</button><button class="${s==='A'?'onA':''}" onclick="mark(${w.id},'A')">A</button><button class="${x.ot?'onO':''}" onclick="addOT(${w.id})">${x.ot?x.ot+'h':'OT'}</button><button onclick="editAttendance(${w.id})">✏️</button><button onclick="clearAtt(${w.id})">✕</button></div>`}).join(''):'<div class="empty">Add workers first.</div>'
+}
+function futureProjectOptions(selected){return '<option value="">Select project</option>'+db.projects.map(p=>`<option value="${p.id}" ${+selected===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}
+function renderFuture(){
+ futureDate.value=futureDate.value||todayISO(); futureFilterDate.value=futureFilterDate.value||futureDate.value;
+ futureWorker.innerHTML='<option value="">Select labour</option>'+db.workers.map(w=>`<option value="${w.id}">${esc(w.name)} • ${money(w.rate)}/day</option>`).join('');
+ futureProject.innerHTML=futureProjectOptions(futureProject.value);
+ let d=futureFilterDate.value||futureDate.value, rows=(db.futurePlans||[]).filter(x=>x.date===d).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+ let total=rows.reduce((a,x)=>a+(Number(x.rate)||0),0), projects={}; rows.forEach(x=>{let p=db.projects.find(p=>p.id===x.projectId);let n=p?.name||'No Project';projects[n]=(projects[n]||0)+1});
+ futureSummary.innerHTML=`<div class="kpis"><div class="mini"><span>👷 Labour</span><b>${rows.length}</b></div><div class="mini"><span>🏗️ Sites</span><b>${Object.keys(projects).length}</b></div><div class="mini"><span>💰 Estimated</span><b>${money(total)}</b></div></div>`+(Object.entries(projects).map(([n,c])=>`<div class="line"><span>🏗️ ${esc(n)}</span><b>${c} labour</b></div>`).join('')||'<div class="empty" style="margin-top:10px">इस तारीख के लिए कोई future labour नहीं है।</div>');
+ futureList.innerHTML=rows.map(x=>{let w=db.workers.find(w=>w.id===x.wid),p=db.projects.find(p=>p.id===x.projectId);return `<div class="card"><div class="itemTop"><div><b>👷 ${esc(w?.name||'Labour')}</b><div class="muted">🏗️ ${esc(p?.name||'No Project')} • ${x.date}${x.note?' • '+esc(x.note):''}</div></div><div><b>${money(x.rate)}</b><button class="iconBtn editIcon" title="Edit future plan" aria-label="Edit future plan" onclick="editFuturePlan(${x.id})">✏️</button><button class="btn danger" style="margin-left:8px" onclick="deleteFuturePlan(${x.id})">Delete</button></div></div></div>`}).join('')||'<div class="card empty">No future labour planned.</div>';
+}
+function addFuturePlan(){let date=futureDate.value, wid=+futureWorker.value, pid=+futureProject.value, w=db.workers.find(x=>x.id===wid);if(!date||!wid||!pid)return alert('Date, worker and project select karo.');let rate=+futureRate.value||w?.rate||0;db.futurePlans=db.futurePlans||[];db.futurePlans.push({id:Date.now(),date,wid,projectId:pid,rate,note:futureNote.value.trim()});futureNote.value='';futureRate.value='';save();futureFilterDate.value=date;}
+function editFuturePlan(id){let x=(db.futurePlans||[]).find(v=>v.id===id);if(!x)return;let date=prompt('Date (YYYY-MM-DD):',x.date||todayISO());if(date===null)return;let rate=prompt('Daily rate:',String(x.rate||0));if(rate===null)return;rate=+rate||0;let note=prompt('Note:',x.note||'');if(note===null)return;Object.assign(x,{date,rate,note:note.trim()});save()}
+function deleteFuturePlan(id){if(confirm('Future labour plan delete karein?')){db.futurePlans=(db.futurePlans||[]).filter(x=>x.id!==id);save()}}
+function initFuture(){futureDate.value=futureDate.value||todayISO();futureFilterDate.value=futureFilterDate.value||todayISO();}
+function addPayment(){let wid=+payWorker.value,amount=+payAmount.value||0;if(!wid||amount<=0)return alert('Select worker and enter amount.');db.payments.push({id:Date.now(),wid,amount,type:payType.value,date:payDate.value||todayISO(),note:payNote.value.trim()});payAmount.value='';payNote.value='';save()}
+function editPayment(id){let p=db.payments.find(x=>x.id===id);if(!p)return;let amount=prompt('Amount:',String(p.amount));if(amount===null)return;amount=+amount||0;if(amount<=0)return alert('Enter a valid amount.');let date=prompt('Date (YYYY-MM-DD):',p.date||todayISO());if(date===null)return;let type=prompt('Type: Payment or Advance',p.type||'Payment');if(type===null)return;type=type.trim().toLowerCase().startsWith('a')?'Advance':'Payment';let note=prompt('Note:',p.note||'');if(note===null)return;Object.assign(p,{amount,date,type,note:note.trim()});save()}
+function deletePayment(id){if(confirm('Delete this payment?')){db.payments=db.payments.filter(p=>p.id!==id);save()}}
+function displayDate(date){
+  const s=String(date||'');
+  const m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? `${m[3]}-${m[2]}-${m[1]}` : s;
+}
+function renderPayments(){payWorker.innerHTML='<option value="">Select labour</option>'+db.workers.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('');payDate.value=payDate.value||todayISO();paymentList.innerHTML=db.payments.slice().reverse().map(p=>{let w=db.workers.find(x=>x.id===p.wid);return `<div class="card"><div class="itemTop"><div><b>${esc(w?.name||'Labour')}</b><div class="muted">${displayDate(p.date)} • ${esc(p.type==='Advance'?t('advanceType'):t('paymentType'))}${p.note?' • '+esc(p.note):''}</div></div><div class="paymentActions"><b>${money(p.amount)}</b><div class="compactActions"><button class="iconBtn wa" title="WhatsApp" aria-label="WhatsApp" onclick="whatsappPayment(${p.id})"></button><button class="iconBtn call" title="Call" aria-label="Call" onclick="callPaymentWorker(${p.id})"></button><button class="iconBtn editIcon" title="Edit payment" aria-label="Edit payment" onclick="editPayment(${p.id})"></button><button class="iconBtn deleteAction" title="Delete payment" aria-label="Delete payment" onclick="deletePayment(${p.id})"></button></div></div></div></div>`}).join('')||'<div class="card empty">No payments yet.</div>'}
+function addCash(){let amount=+cashAmount.value||0;if(amount<=0)return alert('Enter amount.');db.cash.push({id:Date.now(),projectId:+cashProject.value||null,amount,type:cashType.value,date:cashDate.value||todayISO(),note:cashNote.value.trim()});cashAmount.value='';cashNote.value='';save()}
+function editCash(id){let x=db.cash.find(v=>v.id===id);if(!x)return;let amount=prompt('Amount:',String(x.amount));if(amount===null)return;amount=+amount||0;if(amount<=0)return alert('Enter a valid amount.');let date=prompt('Date (YYYY-MM-DD):',x.date||todayISO());if(date===null)return;let type=prompt('Type: Income or Expense',x.type||'Income');if(type===null)return;type=type.trim().toLowerCase().startsWith('e')?'Expense':'Income';let note=prompt('Description:',x.note||'');if(note===null)return;Object.assign(x,{amount,date,type,note:note.trim()});save()}
+function deleteCash(id){if(confirm('Delete this cashbook entry?')){db.cash=db.cash.filter(x=>x.id!==id);save()}}
+function renderCash(){cashProject.innerHTML=projectOptions(cashProject.value);cashDate.value=cashDate.value||todayISO();cashList.innerHTML=db.cash.slice().reverse().map(x=>{let p=db.projects.find(y=>y.id===x.projectId);return `<div class="card"><div class="itemTop"><div><b>${esc(x.note||x.type)}</b><div class="muted">${x.date} • ${esc(p?.name||'Overall')}</div></div><div><b class="${x.type==='Income'?'green':'red'}">${x.type==='Income'?'+':'-'}${money(x.amount)}</b><button class="iconBtn editIcon" title="Edit entry" aria-label="Edit entry" onclick="editCash(${x.id})">✏️</button><button class="btn danger" style="margin-left:8px" onclick="deleteCash(${x.id})">Delete</button></div></div></div>`}).join('')||'<div class="card empty">No cashbook entries.</div>'}
+function renderReport(){
+const selectedReportWorker=reportWorker.value;
+reportWorker.innerHTML='<option value="">Select labour</option>'+db.workers.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('');
+if(selectedReportWorker)reportWorker.value=selectedReportWorker;
+let w=db.workers.find(x=>x.id===+reportWorker.value);if(!w){reportBody.innerHTML='<div class="empty">Select a worker to see their statement.</div>';return}
+let s=workerStats(w),days=Object.entries(db.attendance).filter(([d,x])=>attStatus(x,w.id).status);
+let history=workerSiteHistory(w.id);reportBody.innerHTML=`<div class="card"><div class="person"><div>${w.photo?`<img class="avatar" src="${w.photo}">`:`<div class="avatarText">${esc(initials(w.name))}</div>`}</div><div><b>${esc(w.name)}</b><div class="muted">${esc(w.phone||'')} • ${esc(roleText(w.role))} • ${money(w.rate)}/day</div></div></div><div class="line"><span>Full days</span><b>${s.full}</b></div><div class="line"><span>Half days</span><b>${s.half}</b></div><div class="line"><span>OT hours</span><b>${s.ot}</b></div><div class="line"><span>Total earned</span><b>${money(s.earned)}</b></div><div class="line"><span>Total paid</span><b>${money(s.paid)}</b></div><div class="line"><span>Balance / बाकी</span><b class="${s.balance<0?'red':'green'}">${s.balance<0?'-₹'+Math.abs(s.balance).toLocaleString('en-IN'):money(s.balance)}</b></div><div class="line"><span>Advance remaining</span><b class="amber">${money(s.advance)}</b></div><div class="line"><span>Recorded attendance dates</span><b>${days.length}</b></div></div><div class="card"><h3>📍 ${t('siteHistory')}</h3>${history.length?`<table class="table"><thead><tr><th>Date</th><th>Site / साइट</th><th>Status</th><th>OT</th></tr></thead><tbody>${history.map(h=>`<tr><td>${esc(h.date)}</td><td><b>${esc(h.project)}</b></td><td>${esc(h.status||'—')}</td><td>${h.ot?h.ot+'h':'—'}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">No site history yet.</div>'}</div>`
+}
+function copyCurrentReport(){let w=db.workers.find(x=>x.id===+reportWorker.value);if(!w)return alert(t('selectWorker'));let s=workerStats(w);let msg=`${w.name} - ${roleText(w.role)}\nEarned: ${money(s.earned)}\nPaid: ${money(s.paid)}\nBalance: ${money(s.balance)}\nAdvance: ${money(s.advance)}`;navigator.clipboard?.writeText(msg).then(()=>alert(db.lang==='hi'?'कॉपी हो गया।':'Copied.')).catch(()=>alert(msg))}
+function whatsappCurrentReport(){let w=db.workers.find(x=>x.id===+reportWorker.value);if(!w)return alert(t('selectWorker'));let s=workerStats(w);let msg=`Namaste ${w.name}, Labour Hisab statement:\n\n👷 Role: ${roleText(w.role)}\n🗓️ Full days: ${s.full}\n🗓️ Half days: ${s.half}\n⏱️ OT hours: ${s.ot}\n💰 Total earned: ${money(s.earned)}\n💵 Total paid: ${money(s.paid)}\n💸 Balance: ${money(s.balance)}\n💰 Advance remaining: ${money(s.advance)}\n\n${db.profile?.company||'Labour Hisab'}`;waOpen(w.phone,msg,w.id)}
+function excelEsc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function exportExcel(){
+ let rows=[];
+ rows.push(['LABOUR HISAB','','','','','','']);
+ rows.push(['Generated',new Date().toLocaleString('en-IN'),'','','','','']);
+ rows.push([]);
+ rows.push(['WORKERS','Name','Phone','Role','Daily Rate','OT Rate','Project','Join Date','Address','Earned','Paid','Balance','Advance']);
+ db.workers.forEach(w=>{let st=workerStats(w),pr=db.projects.find(p=>p.id===w.projectId);rows.push(['',w.name,w.phone||'',roleText(w.role),w.rate||0,w.otRate||0,pr?.name||'',w.joinDate||'',w.address||'',st.earned,st.paid,st.balance,st.advance])});
+ rows.push([]); rows.push(['ATTENDANCE','Date','Labour','Site / Project','Status','OT Hours']);
+ Object.keys(db.attendance).sort().forEach(d=>{let a=db.attendance[d]||{};db.workers.forEach(w=>{let x=a[w.id];if(x)rows.push(['',d,w.name,attendanceProjectName(attStatus(a,w.id).projectId),x.status||'',x.ot||0])})});
+ rows.push([]); rows.push(['PAYMENTS','Date','Labour','Type','Amount','Note']);
+ db.payments.slice().sort((a,b)=>String(a.date).localeCompare(String(b.date))).forEach(p=>{let w=db.workers.find(x=>x.id===p.wid);rows.push(['',p.date,w?.name||'',p.type,p.amount,p.note||''])});
+ rows.push([]); rows.push(['CASHBOOK','Date','Project','Type','Amount','Description']);
+ db.cash.slice().sort((a,b)=>String(a.date).localeCompare(String(b.date))).forEach(x=>{let pr=db.projects.find(p=>p.id===x.projectId);rows.push(['',x.date,pr?.name||'Overall',x.type,x.amount,x.note||''])});
+ let table='<table border="1">'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+excelEsc(c)+'</td>').join('')+'</tr>').join('')+'</table>';
+ let html='<html><head><meta charset="UTF-8"></head><body>'+table+'</body></html>';
+ let blob=new Blob(['\\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='labour-hisab-excel-'+todayISO()+'.xls';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
+}
+function totals(){let earned=db.workers.reduce((a,w)=>a+workerStats(w).earned,0),paid=db.payments.reduce((a,p)=>a+p.amount,0),balance=db.workers.reduce((a,w)=>a+workerStats(w).balance,0),income=db.cash.filter(x=>x.type==='Income').reduce((a,x)=>a+x.amount,0),expense=db.cash.filter(x=>x.type==='Expense').reduce((a,x)=>a+x.amount,0);return {earned,paid,balance,income,expense}}
+function renderDashboard(){
+let t0=totals(),d=db.attendance[todayISO()]||{},present=0,half=0,earnedToday=0;
+db.workers.forEach(w=>{let x=attStatus(d,w.id);if(x.status==='P')present++;if(x.status==='H')half++;if(x.status==='P')earnedToday+=w.rate;if(x.status==='H')earnedToday+=w.rate/2;if(x.ot)earnedToday+=x.ot*(w.otRate||0)});
+let paidToday=db.payments.filter(p=>p.date===todayISO()).reduce((a,p)=>a+p.amount,0);
+sProjects.textContent=db.projects.length;sCompleted.textContent=db.projects.filter(p=>p.completed).length;sIncome.textContent=money(t0.income);sExpense.textContent=money(t0.expense);sPayable.textContent=money(t0.balance);sWorkers.textContent=db.workers.length;sPresent.textContent=present+' / '+half;sEarnedToday.textContent=money(earnedToday);sPaidToday.textContent=money(paidToday);
+dashHello.textContent='Hello, '+(db.profile?.name||'Friend')+' 👋';dashDate.textContent=new Date().toLocaleDateString(db.lang==='hi'?'hi-IN':'en-IN',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});setCompany.textContent=db.profile?.company||'Labour Hisab';setOwner.textContent=[db.profile?.name,db.profile?.surname].filter(Boolean).join(' ')
+}
+function openWorkerModal(id){
+let w=db.workers.find(x=>x.id===id);if(!w)return;let s=workerStats(w),p=db.projects.find(x=>x.id===w.projectId);modalWorkerName.textContent=w.name;
+modalWorkerBody.innerHTML=`<div class="profile" style="margin:10px 0">${w.photo?`<img class="avatar" style="width:76px;height:76px" src="${w.photo}">`:`<div class="avatarText" style="width:76px;height:76px">${esc(initials(w.name))}</div>`}<div><b>${esc(roleText(w.role))}</b><div class="muted">${esc(w.phone||t('noPhone'))}</div></div></div><div class="line"><span>Daily rate</span><b>${money(w.rate)}</b></div><div class="line"><span>OT rate / hour</span><b>${money(w.otRate||0)}</b></div><div class="line"><span>Project</span><b>${esc(p?.name||t('noProject'))}</b></div><div class="line"><span>Join date</span><b>${esc(w.joinDate||'')}</b></div><div class="line"><span>Address</span><b>${esc(w.address||'')}</b></div><div class="card" style="margin-top:10px"><h3>📍 ${t('siteHistory')}</h3>${workerSiteHistory(w.id).slice(0,10).map(h=>`<div class="line"><span>${esc(h.date)}</span><b>${esc(h.project)}${h.status?' • '+esc(h.status):''}</b></div>`).join('')||'<div class="muted">No site history yet.</div>'}</div><div class="line"><span>Full / Half days</span><b>${s.full} / ${s.half}</b></div><div class="line"><span>Total earned</span><b>${money(s.earned)}</b></div><div class="line"><span>Total paid</span><b>${money(s.paid)}</b></div><div class="line"><span>${t('balance')}</span><b class="red">${money(s.balance)}</b></div><div class="line"><span>${t('advance')}</span><b class="amber">${money(s.advance)}</b></div><div class="actions compactActions" style="margin-top:12px"><button class="iconBtn wa" title="WhatsApp" aria-label="WhatsApp" onclick="whatsappWorker(${w.id})"></button><button class="iconBtn call" title="Call" aria-label="Call" onclick="callWorker(${w.id})"></button><button class="iconBtn editIcon" title="Edit Labour" aria-label="Edit Labour" onclick="closeWorkerModal();openWorkerForm(${w.id})"></button><button class="iconBtn" title="Attendance" aria-label="Attendance" onclick="closeWorkerModal();go('attendance')"></button></div>`;
+workerModal.classList.remove('hidden')
+}
+function closeWorkerModal(){workerModal.classList.add('hidden')}
+
+function phoneDigits(phone){let digits=String(phone||'').replace(/\D/g,'');if(digits.length===10)digits='91'+digits;return digits}
+function waOpen(phone,message,workerId){
+  let digits=phoneDigits(phone);
+  if(!digits){alert(db.lang==='hi'?'इस मजदूर का फोन नंबर सेव नहीं है। पहले Edit Labour में मोबाइल नंबर डालें।':'This worker has no phone number. Please add the phone number in Edit Labour first.');if(workerId)openWorkerForm(workerId);return}
+  window.open('https://wa.me/'+digits+'?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
+}
+function callWorker(id){let w=db.workers.find(x=>x.id===id);if(!w)return;let digits=phoneDigits(w.phone);if(!digits){alert(db.lang==='hi'?'पहले मजदूर का फोन नंबर सेव करें।':'Please save the worker phone number first.');openWorkerForm(id);return}let tel='tel:+'+digits;window.location.href=tel;setTimeout(()=>{if(document.visibilityState==='visible'&&/Win|Mac|Linux/i.test(navigator.platform)){alert((db.lang==='hi'?'कंप्यूटर में सीधे फोन कॉल तभी होगी जब कोई calling app/phone handler जुड़ा हो। नंबर: ':'On PC/Laptop, calling needs a phone/calling app. Number: ')+ '+'+digits)}},900)}
+function callPaymentWorker(id){let p=db.payments.find(x=>x.id===id);if(!p)return;callWorker(p.wid)}
+function whatsappWorker(id){
+  let w=db.workers.find(x=>x.id===id); if(!w)return;
+  let s=workerStats(w);
+  let msg=`Namaste ${w.name}, Labour Hisab update:\n\nRole: ${roleText(w.role)}\nDays: ${s.days}\nEarned: ${money(s.earned)}\nPaid: ${money(s.paid)}\nBalance: ${money(s.balance)}\nAdvance remaining: ${money(s.advance)}\n\n${db.profile?.company||'Labour Hisab'}`;
+  waOpen(w.phone,msg,w.id);
+}
+function whatsappPayment(id){
+  let p=db.payments.find(x=>x.id===id); if(!p)return;
+  let w=db.workers.find(x=>x.id===p.wid); if(!w)return;
+  let msg=`Namaste ${w.name},\n\nPayment update from ${db.profile?.company||'Labour Hisab'}:\nAmount: ${money(p.amount)}\nType: ${p.type}\nDate: ${p.date}${p.note?'\nNote: '+p.note:''}\n\nThank you.`;
+  waOpen(w.phone,msg,w.id);
+}
+function backupData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='labour-hisab-backup-'+todayISO()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function restoreData(e){let f=e.target.files?.[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{let x=JSON.parse(rd.result);if(!x||!Array.isArray(x.workers)||!Array.isArray(x.payments))throw 0;if(confirm('Restore this backup? Current records will be replaced.')){db={...fresh(),...x};save();applyLanguage();alert('Backup restored.')}}catch(err){alert('Invalid backup file.')}};rd.readAsText(f)}
+function resetAll(){if(confirm('This will permanently clear local app data. Make a backup first. Continue?')){localStorage.removeItem(KEY);location.reload()}}
+/* ===== Firebase Auth + Firestore cloud sync ===== */
+function firebaseEscape(s){return String(s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function firebaseUserLabel(){return firebaseUser?.email||'Not signed in'}
+function ensureFirebaseUI(){
+  if(document.getElementById('firebaseAuthModal')) return;
+  const style=document.createElement('style');
+  style.id='firebaseAuthStyle';
+  style.textContent=`#firebaseAuthModal{position:fixed;inset:0;background:rgba(5,12,25,.72);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:18px}#firebaseAuthModal.hidden{display:none!important}.firebaseAuthBox{width:min(430px,100%);background:var(--card,#fff);color:var(--text,#172033);border-radius:22px;padding:22px;box-shadow:0 24px 80px rgba(0,0,0,.35)}.firebaseAuthBox h2{margin:0 0 6px}.firebaseAuthBox .muted{margin-bottom:14px}.firebaseAuthBox input{width:100%;margin:6px 0 10px}.firebaseAuthActions{display:flex;gap:8px;flex-wrap:wrap}.firebaseAuthActions button{flex:1}.firebaseAuthStatus{min-height:20px;margin:8px 0;font-size:13px}.firebaseAccountPill{display:inline-flex;align-items:center;gap:7px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.firebaseAccountPill button{margin-left:6px}`;
+  document.head.appendChild(style);
+  const wrap=document.createElement('div');
+  wrap.id='firebaseAuthModal';wrap.className='hidden';
+  wrap.innerHTML=`<div class="firebaseAuthBox"><div style="font-size:28px">☁️</div><h2 id="firebaseAuthTitle">Online Account</h2><div class="muted" id="firebaseAuthSub">Sign in to restore your Labour Hisab data on any phone, tablet or PC.</div><label>Email</label><input id="firebaseAuthEmail" type="email" autocomplete="email" placeholder="you@example.com"><label>Password</label><input id="firebaseAuthPassword" type="password" autocomplete="current-password" placeholder="Minimum 6 characters"><div class="firebaseAuthStatus" id="firebaseAuthStatus"></div><div class="firebaseAuthActions"><button class="btn primary" id="firebaseAuthSubmit">Log In</button><button class="btn soft" id="firebaseAuthToggle">Create Account</button><button class="btn" id="firebaseAuthOffline">Continue Offline</button></div></div>`;
+  document.body.appendChild(wrap);
+  document.getElementById('firebaseAuthSubmit').onclick=firebaseSubmitAuth;
+  document.getElementById('firebaseAuthToggle').onclick=()=>firebaseSetAuthMode(firebaseAuthMode==='login'?'signup':'login');
+  document.getElementById('firebaseAuthOffline').onclick=()=>firebaseCloseAuth();
+}
+let firebaseAuthMode='login';
+function firebaseSetAuthMode(mode){firebaseAuthMode=mode;ensureFirebaseUI();document.getElementById('firebaseAuthTitle').textContent=mode==='login'?'Log In':'Create Account';document.getElementById('firebaseAuthSubmit').textContent=mode==='login'?'Log In':'Sign Up';document.getElementById('firebaseAuthToggle').textContent=mode==='login'?'Create Account':'Back to Log In';document.getElementById('firebaseAuthStatus').textContent='';}
+function firebaseOpenAuth(mode='login'){ensureFirebaseUI();firebaseSetAuthMode(mode);document.getElementById('firebaseAuthModal').classList.remove('hidden');setTimeout(()=>document.getElementById('firebaseAuthEmail')?.focus(),50)}
+function firebaseCloseAuth(){ensureFirebaseUI();document.getElementById('firebaseAuthModal').classList.add('hidden')}
+function firebaseErrorText(err){const code=err?.code||'';const map={'auth/invalid-email':'Please enter a valid email address.','auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-credential':'Email or password is incorrect.','auth/email-already-in-use':'An account already exists with this email.','auth/weak-password':'Password should be at least 6 characters.','auth/too-many-requests':'Too many attempts. Please try again later.','auth/network-request-failed':'Network error. Check your internet connection.'};return map[code]||err?.message||'Authentication failed.'}
+async function firebaseSubmitAuth(){
+  const email=document.getElementById('firebaseAuthEmail')?.value.trim(),password=document.getElementById('firebaseAuthPassword')?.value||'',status=document.getElementById('firebaseAuthStatus');
+  if(!email||!password){status.textContent='Enter email and password.';return}
+  status.textContent='Please wait…';
+  try{
+    if(firebaseAuthMode==='signup'){sessionStorage.setItem('labour_hisab_just_signed_up','1');await fbAuth.createUserWithEmailAndPassword(email,password)} else {sessionStorage.removeItem('labour_hisab_just_signed_up');await fbAuth.signInWithEmailAndPassword(email,password)}
+  }catch(err){status.textContent=firebaseErrorText(err)}
+}
+function cloudRoot(){return fbDb.collection('users').doc(firebaseUser.uid)}
+async function readCloudData(){
+  const root=cloudRoot();
+  const [meta,profile,projects,workers,attendance,payments,cash,futurePlans]=await Promise.all([
+    root.collection('data').doc('meta').get(),root.collection('data').doc('profile').get(),root.collection('projects').get(),root.collection('workers').get(),root.collection('attendance').get(),root.collection('payments').get(),root.collection('cash').get(),root.collection('futurePlans').get()
+  ]);
+  const hasAny=profile.exists||projects.size||workers.size||attendance.size||payments.size||cash.size||futurePlans.size;
+  if(!hasAny)return null;
+  const out=fresh();
+  if(profile.exists)out.profile=profile.data().value||null;
+  if(meta.exists)out.lang=meta.data().lang||'en';
+  out.projects=projects.docs.map(d=>d.data().value).filter(Boolean);
+  out.workers=workers.docs.map(d=>d.data().value).filter(Boolean);
+  out.attendance={};attendance.docs.forEach(d=>{out.attendance[d.id]=d.data().value||{}});
+  out.payments=payments.docs.map(d=>d.data().value).filter(Boolean);
+  out.cash=cash.docs.map(d=>d.data().value).filter(Boolean);
+  out.futurePlans=futurePlans.docs.map(d=>d.data().value).filter(Boolean);
+  return out;
+}
+async function syncCollection(colName,items,idFn){
+  const ref=cloudRoot().collection(colName),snap=await ref.get(),existing=new Map(snap.docs.map(d=>[d.id,d]));
+  let batch=fbDb.batch(),count=0;
+  const flush=async()=>{if(count){await batch.commit();batch=fbDb.batch();count=0}};
+  for(const item of items){const id=String(idFn(item));batch.set(ref.doc(id),{value:item,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});count++;if(count>=450)await flush();existing.delete(id)}
+  for(const [id] of existing){batch.delete(ref.doc(id));count++;if(count>=450)await flush()}
+  await flush();
+}
+async function syncDbToFirestore(){
+  if(!firebaseUser||firebaseHydrating)return;
+  if(firebaseSyncing){firebaseSyncQueued=true;return;}
+  firebaseSyncing=true;
+  try{
+    const root=cloudRoot();
+    await Promise.all([
+      root.collection('data').doc('profile').set({value:db.profile||null,updatedAt:firebase.firestore.FieldValue.serverTimestamp()}),
+      root.collection('data').doc('meta').set({lang:db.lang||'en',updatedAt:firebase.firestore.FieldValue.serverTimestamp()}),
+      syncCollection('projects',db.projects||[],x=>x.id),
+      syncCollection('workers',db.workers||[],x=>x.id),
+      syncCollection('payments',db.payments||[],x=>x.id),
+      syncCollection('cash',db.cash||[],x=>x.id),
+      syncCollection('futurePlans',db.futurePlans||[],x=>x.id),
+      syncCollection('attendance',Object.entries(db.attendance||{}).map(([date,value])=>({date,value})),x=>x.date)
+    ]);
+  }finally{firebaseSyncing=false;if(firebaseSyncQueued&&firebaseUser&&!firebaseHydrating){firebaseSyncQueued=false;syncDbToFirestore().catch(err=>console.error('Firestore queued sync failed:',err))}}
+}
+async function hydrateFromFirebase(){
+  if(!firebaseUser)return;
+  firebaseHydrating=true;
+  try{
+    const cloud=await readCloudData();
+    if(cloud){db={...fresh(),...cloud};localStorage.setItem(KEY,JSON.stringify(db));}
+    else if(sessionStorage.getItem('labour_hisab_just_signed_up')==='1'){await syncDbToFirestore();sessionStorage.removeItem('labour_hisab_just_signed_up')}
+    else {db=fresh();localStorage.setItem(KEY,JSON.stringify(db))}
+    applyLanguage();renderAll();
+  }catch(err){console.error('Firebase restore failed:',err);alert('Could not restore online data. Your local data is still safe on this device.')}
+  finally{firebaseHydrating=false}
+}
+function firebaseAccountUI(){
+  ensureFirebaseUI();
+  const card=document.getElementById('firebaseAccountCard');
+  if(!card)return;
+  if(firebaseUser){card.innerHTML=`<div class="line"><span>☁️ Online account</span><b class="firebaseAccountPill">${firebaseEscape(firebaseUser.email)}</b></div><div class="actions" style="margin-top:10px"><button class="btn soft" onclick="firebaseSyncNow()">☁️ Sync Now</button><button class="btn danger" onclick="firebaseSignOut()">Log Out</button></div><div class="muted" style="margin-top:8px">Your Labour Hisab data is linked to this account and can be restored on another device.</div>`}
+  else card.innerHTML=`<div class="line"><span>☁️ Online account</span><b>Not signed in</b></div><div class="actions" style="margin-top:10px"><button class="btn primary" onclick="firebaseOpenAuth('login')">Log In</button><button class="btn soft" onclick="firebaseOpenAuth('signup')">Create Account</button></div><div class="muted" style="margin-top:8px">Sign in to restore your data on any phone, tablet or PC. Local/offline data remains available without an account.</div>`;
+}
+async function firebaseSyncNow(){try{await syncDbToFirestore();alert('Online data synced successfully.')}catch(e){alert('Sync failed. Please check your internet connection.')}}
+async function firebaseSignOut(){try{await fbAuth.signOut();firebaseCloseAuth();firebaseAccountUI();renderAll()}catch(e){alert(firebaseErrorText(e))}}
+function firebaseInsertSettingsCard(){
+  const settings=document.getElementById('settings');if(!settings||document.getElementById('firebaseAccountCard'))return;
+  const card=document.createElement('div');card.className='card';card.id='firebaseAccountCard';
+  settings.insertBefore(card,settings.firstElementChild);firebaseAccountUI();
+}
+ensureFirebaseUI();
+fbAuth.onAuthStateChanged(async user=>{
+  firebaseUser=user||null;firebaseReady=true;firebaseInsertSettingsCard();firebaseAccountUI();
+  if(user){firebaseCloseAuth();await hydrateFromFirebase()}
+  else{renderAll();if(!sessionStorage.getItem('labour_hisab_auth_prompted')){sessionStorage.setItem('labour_hisab_auth_prompted','1');firebaseOpenAuth('login')}}
+});
+
+function renderAll(){
+if(!db.profile){document.querySelectorAll('main>section').forEach(s=>s.classList.add('hidden'));onboarding.classList.remove('hidden');applyLanguage();return}
+if(current==='onboarding')current='dashboard';renderDashboard();renderAIProjects();initFuture();renderFuture();renderProjects();renderWorkers();renderAttendance();renderPayments();renderCash();renderReport();
+document.querySelectorAll('main>section').forEach(s=>s.classList.toggle('hidden',s.id!==current));buildNav();applyLanguage()
+}
+window.addEventListener('load',()=>{attDate.value=todayISO();payDate.value=todayISO();cashDate.value=todayISO();if(window.futureDate)futureDate.value=todayISO();if(window.futureFilterDate)futureFilterDate.value=todayISO();renderAll();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{})});
+
+
+/* ===== Inline SVG button icons: no external library required ===== */
+(function(){
+  const ICONS={
+    add:'<path d="M12 5v14M5 12h14"/>',
+    save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v6h7V4M8 20v-6h8v6"/>',
+    edit:'<path d="M4 20h4l10.5-10.5a2.12 2.12 0 0 0-3-3L5 17v3z"/><path d="M14.5 7.5l3 3"/>',
+    delete:'<path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/>',
+    calendar:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    money:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M7 9h.01M17 15h.01"/>',
+    report:'<path d="M5 20V10M12 20V4M19 20v-7"/><path d="M3 20h18"/>',
+    worker:'<circle cx="12" cy="8" r="3"/><path d="M5 20c.7-4 2.8-6 7-6s6.3 2 7 6"/>',
+    project:'<path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/>',
+    call:'<path d="M6 3l4 4-2 3a15 15 0 0 0 6 6l3-2 4 4-2 3c-8 1-17-8-16-16z"/>',
+    whatsapp:'<path d="M20 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.1A8 8 0 1 1 20 11.5z"/><path d="M8.5 8.2c.2-.5.5-.5.8-.5h.6c.2 0 .4.1.5.4l.8 1.9c.1.2.1.4-.1.6l-.7.8c.8 1.2 1.7 2 3 2.7l.8-.7c.2-.2.4-.2.7-.1l1.8.8c.3.1.4.3.4.6v.6c0 .3-.1.6-.5.8-1 .5-2.2.1-3.2-.4-2.1-1.1-4.2-3.1-5.3-5.2-.6-1.1-1-2.3-.5-3.3z"/>',
+    backup:'<path d="M12 3v11M8 7l4-4 4 4"/><path d="M5 13v6h14v-6"/>',
+    search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M16 16l5 5"/>',
+    close:'<path d="M6 6l12 12M18 6L6 18"/>',
+    check:'<path d="m5 12 4 4L19 6"/>',
+    settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.2h-2.5v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H6v-2.5h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5V4h2.5v.2a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.2v2.5h-.2a1.7 1.7 0 0 0-1.5 1z"/>',
+    generic:'<circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/>'
+  };
+  function iconFor(text){
+    const t=(text||'').toLowerCase();
+    if(/delete|remove|reset|clear/.test(t))return 'delete';
+    if(/save|submit|continue|restore|download|backup/.test(t))return 'save';
+    if(/add|new|project name|future labour|advance/.test(t))return 'add';
+    if(/attendance|hajiri|हाजिरी/.test(t))return 'calendar';
+    if(/payment|भुगतान|income|expense|money|रकम/.test(t))return 'money';
+    if(/report|excel|pdf|print|statement/.test(t))return 'report';
+    if(/labour|worker|मजदूर|कामगार/.test(t))return 'worker';
+    if(/project|site|प्रोजेक्ट/.test(t))return 'project';
+    if(/whatsapp/.test(t))return 'whatsapp';
+    if(/ring|call|phone|कॉल/.test(t))return 'call';
+    if(/edit|pencil|profile/.test(t))return 'edit';
+    if(/search|खोज/.test(t))return 'search';
+    if(/cancel|close|बंद|रद्द/.test(t))return 'close';
+    if(/view|open|select|mark|done|complete/.test(t))return 'check';
+    if(/setting|सेटिंग/.test(t))return 'settings';
+    return 'generic';
+  }
+  function makeIcon(name){
+    const span=document.createElement('span');span.className='lh-btn-icon';span.setAttribute('aria-hidden','true');
+    span.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[name]||ICONS.generic)+'</svg>';
+    return span;
+  }
+  function enhance(root){
+    if(!root||!root.querySelectorAll)return;
+    root.querySelectorAll('button:not(.themeToggle):not([data-no-auto-icon]):not(.lh-enhanced)').forEach(btn=>{
+      btn.classList.add('lh-enhanced');
+      const label=(btn.getAttribute('aria-label')||btn.innerText||'').trim();
+      const iconName=iconFor(label);
+      if(iconName==='add'){ btn.innerHTML=btn.innerHTML.replace(/[＋+]/g,''); }
+      btn.insertBefore(makeIcon(iconName),btn.firstChild);
+    });
+  }
+  window.enhanceLabourButtons=enhance;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>enhance(document));else enhance(document);
+  const mo=new MutationObserver(m=>m.forEach(x=>x.addedNodes.forEach(n=>{if(n.nodeType===1)enhance(n)})));
+  mo.observe(document.body,{childList:true,subtree:true});
+})();
+
+</script>
+<style>
+/* Dark mode consistency fix: remove light-only surfaces left by the Android polish layer */
+html.dark body{background:radial-gradient(circle at 10% -10%,rgba(40,110,255,.12),transparent 34%),var(--bg);color:var(--text)}
+html.dark .card,
+html.dark .stat,
+html.dark .item,
+html.dark .projectCard,
+html.dark #paymentList .card,
+html.dark #workerList .card,
+html.dark #projectList .card,
+html.dark #cashList .card,
+html.dark #futureList .card{background:var(--card)!important;border-color:var(--line)!important;color:var(--text)}
+html.dark .att{background:var(--card)!important;border-color:var(--line)!important;box-shadow:0 5px 16px rgba(0,0,0,.24)!important}
+html.dark .att select,
+html.dark .att button{background:#111c2d!important;border-color:#30415a!important;color:var(--text)!important}
+html.dark .att>button:nth-of-type(1){background:#173a2a!important;border-color:#3c9b65!important;color:#7fe0a2!important}
+html.dark .att>button:nth-of-type(2){background:#3b2e18!important;border-color:#b98b42!important;color:#ffd37b!important}
+html.dark .att>button:nth-of-type(3){background:#3a1d23!important;border-color:#b95a67!important;color:#ff9ba8!important}
+html.dark .att>button:nth-of-type(4){background:#292044!important;border-color:#8069cf!important;color:#c5b6ff!important}
+html.dark .att>button:nth-of-type(5){background:#182c4b!important;border-color:#41658e!important;color:#9fc5ff!important}
+html.dark .att>button:nth-of-type(6){background:#172235!important;border-color:#3a495e!important;color:#c2ccda!important}
+html.dark .att>button:nth-of-type(1).onP{background:#1d5134!important}
+html.dark .att>button:nth-of-type(2).onH{background:#513c1d!important}
+html.dark .att>button:nth-of-type(3).onA{background:#54262d!important}
+html.dark .att>button:nth-of-type(4).onO{background:#3b2b62!important}
+html.dark .stat .good,
+html.dark .btn.good{background:#173727!important;color:#9ce6b7!important;border-color:#2e6042!important}
+html.dark .stat .danger,
+html.dark .btn.danger{background:#3a1d23!important;color:#ff9ba8!important;border-color:#65343c!important}
+html.dark .stat .soft,
+html.dark .btn.soft{background:#182c4b!important;color:#9fc5ff!important;border-color:#30415a!important}
+html.dark .btn.ghost{background:#121b2b!important;color:var(--text)!important;border-color:var(--line)!important}
+html.dark .iconBtn{background:#172235!important;border-color:#3a495e!important;color:#c2ccda!important}
+html.dark .compactActions .wa{background:#173727!important;color:#9ce6b7!important;border-color:#2e6042!important}
+html.dark .compactActions .call{background:#182c4b!important;color:#9fc5ff!important;border-color:#30415a!important}
+html.dark .compactActions .deleteAction{background:#3a1d23!important;color:#ff9ba8!important;border-color:#65343c!important}
+html.dark .compactActions .editIcon{background:#3b2e18!important;color:#ffd37b!important;border-color:#6c5329!important}
+html.dark .bottomNav{background:rgba(16,25,40,.97)!important;border-color:var(--line)!important;box-shadow:0 -8px 24px rgba(0,0,0,.28)!important}
+html.dark .bottomNav button{color:#a8b4c7!important}
+html.dark .bottomNav button.active{background:#1b3154!important;color:#9fc5ff!important}
+html.dark label{color:#a8b4c7!important}
+html.dark .footerLinks button{color:#8bb8ff!important}
+html.dark .mini{background:#172235!important;border-color:#2b3b52!important}
+html.dark .mini:hover{border-color:#41658e!important}
+html.dark .notice{background:#172b45!important;color:#b9d5ff!important;border-color:#2c4c72!important}
+html.dark .warn{background:#3b2d17!important;color:#ffd37b!important}
+html.dark .success{background:#173727!important;color:#9ce6b7!important}
+html.dark .pill{background:#1a3155!important;color:#9fc5ff!important}
+html.dark .table th,html.dark .table td{border-color:var(--line)!important}
+html.dark .table th{color:#a8b4c7!important}
+html.dark .modal{background:#000000b8!important}
+html.dark .modalBox{background:#121b2b!important;color:var(--text)!important;border-color:var(--line)!important}
+html.dark .close{background:#1c293d!important;color:var(--text)!important;border-color:#30415a!important}
+</style>
+
+</body></html>
